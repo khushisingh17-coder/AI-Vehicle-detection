@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Smart Vehicle Intelligence System</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body class="loading">
+
+    <div class="site-loader" id="siteLoader" aria-live="polite" aria-label="Loading application">
+        <div class="loader-panel">
+            <div class="loader-heading">
+                <span class="loader-badge">AI Vehicle Intelligence</span>
+                <h1>Initializing intelligent fleet scanning</h1>
+            </div>
+            <div class="loader-visual">
+                <div class="loader-ring"></div>
+                <div class="loader-car"><i class="fa-solid fa-car"></i></div>
+            </div>
+            <p class="loader-copy">Calibrating cameras, analyzing models, and securing your vehicle insights.</p>
+            <div class="loader-progress">
+                <span class="loader-progress-label">Loading modules</span>
+                <div class="loader-progress-track">
+                    <div class="loader-progress-fill" style="width: 0%;"></div>
+                </div>
+                <div class="loader-status" id="loaderStatus">Preparing AI core...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-background" aria-hidden="true">
+        <span class="bg-circle bg-circle-1"></span>
+        <span class="bg-circle bg-circle-2"></span>
+        <span class="bg-circle bg-circle-3"></span>
+        <span class="bg-particle bg-particle-1"></span>
+        <span class="bg-particle bg-particle-2"></span>
+        <span class="bg-particle bg-particle-3"></span>
+        <span class="bg-particle bg-particle-4"></span>
+        <span class="bg-particle bg-particle-5"></span>
+        <span class="bg-particle bg-particle-6"></span>
+    </div>
+
+    <div class="cursor-glow" aria-hidden="true"></div>
+    <main>
+
+        <!-- ================= Navbar ================= -->
+
+        <header>
+
+            <nav class="navbar" role="navigation">
+
+                <a class="logo" href="#home">
+                    <i class="fa-solid fa-car logo-icon"></i>
+                    <h2 class="logo-text">AI Vehicle Intelligence</h2>
+                </a>
+
+                <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="hamburger"></span>
+                </button>
+
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#features" class="nav-link">Features</a></li>
+                    <li><a href="#dashboard" class="nav-link">Dashboard</a></li>
+                    <li><a href="#history" class="nav-link">History</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                </ul>
+
+                <div class="nav-actions">
+                    <button class="theme-btn" aria-pressed="false">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
+
+            </nav>
+
+        </header>
+
+        <!-- ================= Hero ================= -->
+
+        <section class="hero">
+
+            <div class="hero-content scroll-reveal fade-up" data-reveal-delay="80">
+
+                <div class="hero-particles">
+                    <span class="particle p1"></span>
+                    <span class="particle p2"></span>
+                    <span class="particle p3"></span>
+                    <span class="particle p4"></span>
+                </div>
+
+                <div class="hero-grid">
+
+                    <div class="hero-copy scroll-reveal fade-right" data-reveal-delay="180">
+                        <span class="hero-eyebrow">Next-generation mobility intelligence</span>
+                        <h1>Smart AI Vehicle Intelligence System</h1>
+                        <p>Detect • Analyze • Recognize • Secure with real-time vehicle insights, predictive alerts, and
+                            intelligent fleet protection.</p>
+                        <div class="hero-actions">
+                            <button>Explore Project</button>
+                            <a href="#features" class="secondary-link">View Features</a>
+                        </div>
+                    </div>
+
+                    <div class="hero-visual scroll-reveal fade-left" data-reveal-delay="220">
+                        <div class="vehicle-card">
+                            <div class="vehicle-glow vehicle-glow-blue"></div>
+                            <div class="vehicle-glow vehicle-glow-orange"></div>
+                            <div class="vehicle-wrap">
+                                <img class="vehicle-img" src="https://img.icons8.com/ios/500/electric-car.png"
+                                    alt="Futuristic electric vehicle">
+                            </div>
+                            <div class="vehicle-badge">Futuristic EV Model</div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="dashboard-section scroll-reveal" id="dashboard">
+            <div class="dashboard-header">
+                <div>
+                    <span class="hero-eyebrow">AI Fleet Dashboard</span>
+                    <h2>Live detection intelligence</h2>
+                    <p>Monitor fleet performance, vehicle health, and AI confidence with premium visual insights.</p>
+                </div>
+                <div class="dashboard-actions">
+                    <div class="search-field">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="search" placeholder="Search plate, company, or state"
+                            aria-label="Search detections">
+                    </div>
+                    <div class="mini-pill">Company: <span>Tesla</span></div>
+                    <div class="mini-pill">State: <span>California</span></div>
+                </div>
+            </div>
+
+            <div class="cards-grid scroll-reveal fade-up" data-reveal-delay="140">
+                <article class="count-card scroll-reveal fade-up" data-target="12846" data-reveal-delay="160">
+                    <span class="label">Total Detections</span>
+                    <span class="count-number">0</span>
+                    <p>Processed by AI across the network.</p>
+                </article>
+                <article class="count-card scroll-reveal fade-up" data-target="99.2" data-suffix="%"
+                    data-reveal-delay="200">
+                    <span class="label">Recognition Accuracy</span>
+                    <span class="count-number">0%</span>
+                    <p>Confidence score on last 1000 captures.</p>
+                </article>
+                <article class="count-card scroll-reveal fade-up" data-target="347" data-reveal-delay="240">
+                    <span class="label">Active Vehicles</span>
+                    <span class="count-number">0</span>
+                    <p>Vehicles currently monitored in real-time.</p>
+                </article>
+                <article class="count-card scroll-reveal fade-up" data-target="18" data-reveal-delay="280">
+                    <span class="label">Alerts Today</span>
+                    <span class="count-number">0</span>
+                    <p>Important security events detected.</p>
+                </article>
+            </div>
+
+            <div class="dashboard-panels">
+                <section class="chart-card scroll-reveal fade-left" data-reveal-delay="140">
+                    <div class="panel-head">
+                        <h3>Detection Trend</h3>
+                        <span>Last 7 days</span>
+                    </div>
+                    <div class="bar-chart">
+                        <div class="bar" style="--value:62"><span>Mon</span></div>
+                        <div class="bar" style="--value:78"><span>Tue</span></div>
+                        <div class="bar" style="--value:90"><span>Wed</span></div>
+                        <div class="bar" style="--value:72"><span>Thu</span></div>
+                        <div class="bar" style="--value:88"><span>Fri</span></div>
+                        <div class="bar" style="--value:94"><span>Sat</span></div>
+                        <div class="bar" style="--value:82"><span>Sun</span></div>
+                    </div>
+                </section>
+
+                <section class="chart-card scroll-reveal fade-right" data-reveal-delay="180">
+                    <div class="panel-head">
+                        <h3>AI Load</h3>
+                        <span>Processing capacity</span>
+                    </div>
+                    <div class="ring-chart">
+                        <div class="ring-inner">
+                            <span>84%</span>
+                            <p>Efficiency</p>
+                        </div>
+                    </div>
+                    <div class="chart-legend">
+                        <span><i></i> Predictive Alerts</span>
+                        <span><i></i> Live Monitoring</span>
+                    </div>
+                </section>
+            </div>
+
+            <section class="history-panel scroll-reveal fade-up" data-reveal-delay="180">
+                <div class="history-header">
+                    <div>
+                        <span class="hero-eyebrow">Detection history</span>
+                        <h3>Recent AI events</h3>
+                    </div>
+                    <button class="pill-button">View full log</button>
+                </div>
+                <div class="table-wrap">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Plate</th>
+                                <th>Company</th>
+                                <th>State</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>10:42 PM</td>
+                                <td>UP32 AB 1234</td>
+                                <td>Hyundai</td>
+                                <td>UP</td>
+                                <td><span class="status-badge status-success">Valid</span></td>
+                            </tr>
+                            <tr>
+                                <td>10:31 PM</td>
+                                <td>DL8CAF 0456</td>
+                                <td>Tesla</td>
+                                <td>DL</td>
+                                <td><span class="status-badge status-warning">Review</span></td>
+                            </tr>
+                            <tr>
+                                <td>09:58 PM</td>
+                                <td>MH12KL 7890</td>
+                                <td>BMW</td>
+                                <td>MH</td>
+                                <td><span class="status-badge status-success">Valid</span></td>
+                            </tr>
+                            <tr>
+                                <td>09:12 PM</td>
+                                <td>HR26DX 3344</td>
+                                <td>Ford</td>
+                                <td>HR</td>
+                                <td><span class="status-badge status-alert">Alert</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </section>
+
+        <!-- ================= Upload ================= -->
+
+        <section class="upload-section scroll-reveal fade-up" data-reveal-delay="140">
+
+            <div class="upload-panel scroll-reveal zoom" data-reveal-delay="180">
+
+                <div class="upload-head scroll-reveal fade-right" data-reveal-delay="220">
+                    <div>
+                        <h2>Upload Vehicle Image</h2>
+                        <p>Upload an image to identify the vehicle and analyze its details with the AI engine.</p>
+                    </div>
+                    <span class="upload-status" id="uploadStatus">Ready to scan</span>
+                </div>
+
+                <div class="upload-grid scroll-reveal fade-up" data-reveal-delay="260">
+                    <div class="upload-box scroll-reveal fade-left" id="uploadDropzone" data-reveal-delay="300">
+
+
+                        <form action="/upload" method="POST" enctype="multipart/form-data">
+
+                            <div class="upload-floating-icon">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                            </div>
+                            <div class="upload-copy">
+                                <h3>Drag & Drop Image</h3>
+                                <p>or browse your device to upload a photo</p>
+                                <button type="button" class="browse-btn">Browse file</button>
+                            </div>
+                            <input type="file" id="fileInput" name="image" accept="image/*">
+                            <div class="progress-wrapper" id="progressWrapper" hidden>
+                                <span class="progress-label">Uploading image...</span>
+                                <div class="progress-track">
+                                    <div class="progress-fill" id="progressFill"></div>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="upload-preview-card scroll-reveal fade-right" data-reveal-delay="320">
+                        <div class="preview-header">Image Preview</div>
+                        <div class="image-preview" id="imagePreview">
+                            <span class="preview-placeholder">Drop an image or click browse to see instant
+                                preview.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="buttons scroll-reveal fade-up" data-reveal-delay="340">
+                <button type="submit" class="detect">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Detect Vehicle
+                </button>
+
+                <button type="button" class="camera">
+                    <i class="fa-solid fa-camera"></i>
+                    Live Camera
+                </button>
+
+            </div>
+            </form>
+        </section>
+
+        <!-- ================= AI Features ================= -->
+
+        <section id="features" class="features scroll-reveal fade-up" data-reveal-delay="160">
+
+            <h2>
+
+                AI Features
+
+            </h2>
+
+            <div class="cards scroll-reveal fade-up" data-reveal-delay="180">
+
+                <div class="card">
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                    <h3>
+
+                        Number Plate
+
+                    </h3>
+
+                    <p>
+
+                        Reads the vehicle number plate using AI OCR.
+
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <i class="fa-solid fa-building"></i>
+
+                    <h3>
+
+                        Company
+
+                    </h3>
+
+                    <p>
+
+                        Detects vehicle manufacturer.
+
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <i class="fa-solid fa-car-side"></i>
+
+                    <h3>
+
+                        Vehicle Model
+
+                    </h3>
+
+                    <p>
+
+                        Identifies the exact model.
+
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <i class="fa-solid fa-truck"></i>
+
+                    <h3>
+
+                        Vehicle Type
+
+                    </h3>
+
+                    <p>
+
+                        Car, Bike, Bus, Truck etc.
+
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <i class="fa-solid fa-palette"></i>
+
+                    <h3>
+
+                        Vehicle Color
+
+                    </h3>
+
+                    <p>
+
+                        Detects primary vehicle color.
+
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    <h3>
+
+                        State Detection
+
+                    </h3>
+
+                    <p>
+
+                        Finds state from number plate.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= AI RESULT DASHBOARD ================= -->
+
+        <!-- ================= Premium Hero (inserted) ================= -->
+        <section id="home" class="premium-hero">
+            <div class="hero-bg">
+                <div class="hero-particles">
+                    <span class="hp hp-1"></span>
+                    <span class="hp hp-2"></span>
+                    <span class="hp hp-3"></span>
+                    <span class="hp hp-4"></span>
+                    <span class="hp hp-5"></span>
+                </div>
+            </div>
+            <div class="hero-inner">
+                <div class="hero-copy">
+                    <h1 class="hero-title">AI Vehicle Intelligence</h1>
+                    <p class="hero-sub">AI Powered Number Plate Recognition & Vehicle Analytics Dashboard</p>
+                    <div class="hero-ctas">
+                        <button class="btn btn-primary">Start Detection</button>
+                        <button class="btn btn-ghost">View Dashboard</button>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="car-wrap">
+                        <img src="https://img.icons8.com/ios/400/electric-car.png" alt="Animated car" class="car-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= AI RESULT DASHBOARD ================= -->
+
+        <section class="result-section scroll-reveal fade-up" data-reveal-delay="160">
+
+            <div class="section-title">
+                <h2>AI Detection Result</h2>
+                <p>Complete vehicle analysis generated by Artificial Intelligence.</p>
+            </div>
+
+            <div class="result-container scroll-reveal fade-up" data-reveal-delay="220">
+
+                <!-- Uploaded Image -->
+
+                <div class="image-card scroll-reveal fade-left" data-reveal-delay="260">
+
+                    <h3>Uploaded Image</h3>
+
+                    <div class="image-preview">
+
+                        <img id="uploadedImage" src="assets/upload.png" alt="Uploaded Vehicle">
+                
+
+                    </div>
+
+                </div>
+
+                <!-- Processed Image -->
+
+                <div class="image-card scroll-reveal fade-right" data-reveal-delay="280">
+
+                    <h3>Detected Plate</h3>
+
+                    <div class="image-preview">
+
+                        <img id="processedImage" src="assets/output.png" alt="Processed Vehicle">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Vehicle Information -->
+
+          <div class="vehicle-details scroll-reveal fade-up" data-reveal-delay="320">
+
+                <h2>Vehicle Information</h2>
+
+                <div class="details-grid scroll-reveal fade-up" data-reveal-delay="360">
+            
+                    <div class="info-card">
+                        <i class="fa-solid fa-id-card"></i>
+                        <h4>Number Plate</h4>
+                        <p id="plate">UP32 AB 1234</p>
+                    </div>
+
+                    <div class="info-card">
+                        <i class="fa-solid fa-building"></i>
+                        <h4>Company</h4>
+                   <p id="company">Hyundai</p>
+                    </div>
+
+                    <div class="info-card">
+                        <i class="fa-solid fa-car-side"></i>
+                        <h4>Vehicle Model</h4>
+                     <p id="model">Creta SX</p>
+                    </div>
+
+                    <div class="info-card">
+                        <i class="fa-solid fa-car"></i>
+                        <h4>Vehicle Type</h4>
+                         <p id="type">SUV</p>
+                    </div>
+
+                    <div class="info-card">
+                        <i class="fa-solid fa-palette"></i>
+                        <h4>Vehicle Color</h4>
+                        <p id="color">White</p>
+                    </div>
+
+                    <div class="info-card">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <h4>State</h4>
+                        <p id="state">Uttar Pradesh</p>
+                    </div>
+
+                    <div class="info-card">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <h4>Confidence</h4>
+                        <p id="confidence">98.7%</p>
+                    </div>
+
+                    <div class="info-card">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <h4>Plate Status</h4>
+                        <p id="status">Valid</p>
+                    </div>
+
+                    <div class="info-card">
+                        <i class="fa-solid fa-user"></i>
+                        <h4>Owner Name</h4>
+                        <p id="owner">Rahul Sharma (Demo)</p>
+                    </div>
+
+                    <div class="info-card">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <h4>Blacklist Status</h4>
+                        <p>Not Found</p>
+                    </div>
+
+                    <div class="info-card">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <h4>Date</h4>
+                        <p>02 July 2026</p>
+                    </div>
+
+                    <div class="info-card">
+                        <i class="fa-solid fa-clock"></i>
+                        <h4>Detection Time</h4>
+                        <p>10:45 PM</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Action Buttons -->
+
+            <div class="action-buttons scroll-reveal fade-up" data-reveal-delay="380">
+
+                <button class="download-btn">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    Download PDF Report
+                </button>
+
+                <button class="csv-btn">
+                    <i class="fa-solid fa-file-csv"></i>
+                    Export CSV
+                </button>
+
+                <button class="history-btn">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    View History
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- === Insert user's provided snippet: place after part 2 (added here) === -->
+
+        <section class="dashboard-section">
+
+            <div class="section-title">
+                <h2>AI Analytics Dashboard</h2>
+                <p>Real-time statistics and vehicle detection insights.</p>
+            </div>
+
+            <!-- ================= Statistics Cards ================= -->
+
+            <div class="stats-grid scroll-reveal fade-up" data-reveal-delay="160">
+
+                <div class="stat-card scroll-reveal fade-up" data-reveal-delay="200">
+                    <i class="fa-solid fa-car"></i>
+                    <h1>1250+</h1>
+                    <p>Total Vehicles</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fa-solid fa-car-side"></i>
+                    <h1>720</h1>
+                    <p>Cars</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fa-solid fa-motorcycle"></i>
+                    <h1>280</h1>
+                    <p>Bikes</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fa-solid fa-truck"></i>
+                    <h1>160</h1>
+                    <p>Trucks</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fa-solid fa-bus"></i>
+                    <h1>90</h1>
+                    <p>Buses</p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <h1>98.7%</h1>
+                    <p>Detection Accuracy</p>
+                </div>
+
+            </div>
+
+            <!-- ================= Graph Section ================= -->
+
+            <div class="graph-container">
+
+                <div class="graph-card scroll-reveal fade-left" data-reveal-delay="260">
+
+                    <h3>Vehicle Detection Analytics</h3>
+
+                    <canvas id="vehicleChart"></canvas>
+
+                </div>
+
+                <div class="graph-card scroll-reveal fade-right" data-reveal-delay="280">
+
+                    <h3>Company Distribution</h3>
+
+                    <canvas id="companyChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ===================================================== -->
+        <!--                  SEARCH SECTION                       -->
+        <!-- ===================================================== -->
+
+        <section class="search-section scroll-reveal fade-up" data-reveal-delay="140">
+
+            <div class="search-box scroll-reveal fade-up" data-reveal-delay="180">
+
+                <input type="text" placeholder="Search by Vehicle Number...">
+
+                <button>
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    Search
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ===================================================== -->
+        <!--              DETECTION HISTORY                        -->
+        <!-- ===================================================== -->
+
+        <section id="history" class="history-section scroll-reveal fade-up" data-reveal-delay="160">
+
+            <div class="section-title">
+
+                <h2>Detection History</h2>
+
+                <p>Previously detected vehicles.</p>
+
+            </div>
+
+            <div class="history-table">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Date</th>
+
+                            <th>Vehicle No.</th>
+
+                            <th>Company</th>
+
+                            <th>Model</th>
+
+                            <th>Type</th>
+
+                            <th>Color</th>
+
+                            <th>State</th>
+
+                            <th>Status</th>
+
+                            <th>Confidence</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>02-07-2026</td>
+
+                            <td>UP32AB1234</td>
+
+                            <td>Hyundai</td>
+
+                            <td>Creta</td>
+
+                            <td>SUV</td>
+
+                            <td>White</td>
+
+                            <td>UP</td>
+
+                            <td>
+                                <span class="valid">
+                                    Valid
+                                </span>
+                            </td>
+
+                            <td>98%</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>02-07-2026</td>
+
+                            <td>PB08CD4567</td>
+
+                            <td>Mahindra</td>
+
+                            <td>Scorpio</td>
+
+                            <td>SUV</td>
+
+                            <td>Black</td>
+
+                            <td>Punjab</td>
+
+                            <td>
+
+                                <span class="warning">
+
+                                    Suspicious
+
+                                </span>
+
+                            </td>
+
+                            <td>94%</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>02-07-2026</td>
+
+                            <td>DL05EF9876</td>
+
+                            <td>Tata</td>
+
+                            <td>Nexon</td>
+
+                            <td>SUV</td>
+
+                            <td>Blue</td>
+
+                            <td>Delhi</td>
+
+                            <td>
+
+                                <span class="valid">
+
+                                    Valid
+
+                                </span>
+
+                            </td>
+
+                            <td>99%</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>01-07-2026</td>
+
+                            <td>HR26XY6543</td>
+
+                            <td>Kia</td>
+
+                            <td>Seltos</td>
+
+                            <td>SUV</td>
+
+                            <td>Grey</td>
+
+                            <td>Haryana</td>
+
+                            <td>
+
+                                <span class="valid">
+
+                                    Valid
+
+                                </span>
+
+                            </td>
+
+                            <td>97%</td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <!-- ===================================================== -->
+        <!--                  QUICK ACTIONS                        -->
+        <!-- ===================================================== -->
+
+        <section class="quick-actions">
+
+            <h2>
+
+                Quick Actions
+
+            </h2>
+
+            <div class="action-grid">
+
+                <button>
+
+                    <i class="fa-solid fa-camera"></i>
+
+                    Start Live Detection
+
+                </button>
+
+                <button>
+
+                    <i class="fa-solid fa-file-pdf"></i>
+
+                    Generate Report
+
+                </button>
+
+                <button>
+
+                    <i class="fa-solid fa-file-csv"></i>
+
+                    Export CSV
+
+                </button>
+
+                <button>
+
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    View All Records
+
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer id="about" class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <i class="fa-solid fa-car-side"></i>
+                    <div>
+                        <h3>AI Vehicle Intelligence</h3>
+                        <p>Premium vehicle detection and analytics for modern fleets.</p>
+                    </div>
+                </div>
+                <p class="footer-about">A futuristic AI dashboard solution that secures road intelligence, fleet
+                    insights, and instant vehicle recognition in one streamlined interface.</p>
+            </div>
+
+            <div class="footer-links-grid">
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="#">Home</a>
+                    <a href="#features">Features</a>
+                    <a href="#">Dashboard</a>
+                    <a href="#">History</a>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Contact</h4>
+                    <a href="https://github.com" target="_blank" rel="noreferrer"><i class="fa-brands fa-github"></i>
+                        GitHub</a>
+                    <a href="https://linkedin.com" target="_blank" rel="noreferrer"><i
+                            class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                    <a href="mailto:hello@aivehicle.com"><i
+                            class="fa-solid fa-envelope"></i>realkhushi2212@gmail.com</a>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Technologies</h4>
+                    <span>AI / ML</span>
+                    <span>Computer Vision</span>
+                    <span>HTML5</span>
+                    <span>CSS3</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 (Khushi Singh)AI Vehicle Intelligence. All rights reserved.</p>
+            <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
+                <i class="fa-solid fa-arrow-up"></i>
+            </button>
+        </div>
+    </footer>
+
+    <div class="toast-wrapper" id="toastWrapper" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
