@@ -111,11 +111,29 @@ const revealElements = document.querySelectorAll('.scroll-reveal');
 const scrollTopBtn = document.getElementById('scrollTopBtn');
 const detectBtn = document.querySelector('.detect');
 const cameraBtn = document.querySelector('.camera');
+const heroContent = document.querySelector('.hero-content');
+const heroBackground = document.querySelector('.hero-background');
+
+// ================= Hero background parallax =================
+if (heroContent && heroBackground && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    heroContent.addEventListener('pointermove', (event) => {
+        const rect = heroContent.getBoundingClientRect();
+        const offsetX = ((event.clientX - rect.left) / rect.width - 0.5) * 8;
+        const offsetY = ((event.clientY - rect.top) / rect.height - 0.5) * 8;
+        heroBackground.style.setProperty('--hero-parallax-x', `${offsetX}px`);
+        heroBackground.style.setProperty('--hero-parallax-y', `${offsetY}px`);
+    });
+
+    heroContent.addEventListener('pointerleave', () => {
+        heroBackground.style.setProperty('--hero-parallax-x', '0px');
+        heroBackground.style.setProperty('--hero-parallax-y', '0px');
+    });
+}
 
 const formatValue = (value) => {
     return Number.isInteger(value) ? value : value.toFixed(1);
 };
-const form = document.querySelector("form");
+const uploadForm = document.getElementById("uploadForm");
 
 detectBtn?.addEventListener("click", async (e) => {
 
@@ -130,7 +148,9 @@ detectBtn?.addEventListener("click", async (e) => {
 
     showToast("Uploading image...");
 
-    const formData = new FormData(form);
+   const formData = new FormData();
+
+formData.append("image", fileInput.files[0]);
 
     const response = await fetch("/upload", {
         method: "POST",

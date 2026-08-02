@@ -97,6 +97,27 @@
 
             <div class="hero-content scroll-reveal fade-up" data-reveal-delay="80">
 
+                <!-- ================= Hero animated background ================= -->
+                <div class="hero-background" aria-hidden="true">
+                    <div class="hero-road"></div>
+                    <div class="hero-road-glow"></div>
+                    <div class="hero-road-lines"></div>
+                    <div class="hero-light-streak hero-light-streak-1"></div>
+                    <div class="hero-light-streak hero-light-streak-2"></div>
+                    <div class="hero-light-streak hero-light-streak-3"></div>
+                    <div class="hero-car">
+                        <span class="hero-car-body"></span>
+                        <span class="hero-car-glow"></span>
+                        <span class="hero-car-wheel hero-car-wheel-left"></span>
+                        <span class="hero-car-wheel hero-car-wheel-right"></span>
+                        <span class="hero-car-headlight"></span>
+                    </div>
+                    <span class="hero-float hero-float-1"></span>
+                    <span class="hero-float hero-float-2"></span>
+                    <span class="hero-float hero-float-3"></span>
+                    <div class="hero-scanline"></div>
+                </div>
+
                 <div class="hero-particles">
                     <span class="particle p1"></span>
                     <span class="particle p2"></span>
@@ -283,24 +304,23 @@
                 <div class="upload-grid scroll-reveal fade-up" data-reveal-delay="260">
                     <div class="upload-box scroll-reveal fade-left" id="uploadDropzone" data-reveal-delay="300">
 
+                        <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data"></form>
 
-                        <form action="/upload" method="POST" enctype="multipart/form-data">
-
-                            <div class="upload-floating-icon">
-                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <div class="upload-floating-icon">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+                        <div class="upload-copy">
+                            <h3>Drag & Drop Image</h3>
+                            <p>or browse your device to upload a photo</p>
+                            <button type="button" class="browse-btn">Browse file</button>
+                        </div>
+                        <input type="file" id="fileInput" name="image" accept="image/*">
+                        <div class="progress-wrapper" id="progressWrapper" hidden>
+                            <span class="progress-label">Uploading image...</span>
+                            <div class="progress-track">
+                                <div class="progress-fill" id="progressFill"></div>
                             </div>
-                            <div class="upload-copy">
-                                <h3>Drag & Drop Image</h3>
-                                <p>or browse your device to upload a photo</p>
-                                <button type="button" class="browse-btn">Browse file</button>
-                            </div>
-                            <input type="file" id="fileInput" name="image" accept="image/*">
-                            <div class="progress-wrapper" id="progressWrapper" hidden>
-                                <span class="progress-label">Uploading image...</span>
-                                <div class="progress-track">
-                                    <div class="progress-fill" id="progressFill"></div>
-                                </div>
-                            </div>
+                        </div>
                     </div>
 
                     <div class="upload-preview-card scroll-reveal fade-right" data-reveal-delay="320">
@@ -504,7 +524,7 @@
                     <div class="image-preview">
 
                         <img id="uploadedImage" src="assets/upload.png" alt="Uploaded Vehicle">
-                
+
 
                     </div>
 
@@ -528,12 +548,12 @@
 
             <!-- Vehicle Information -->
 
-          <div class="vehicle-details scroll-reveal fade-up" data-reveal-delay="320">
+            <div class="vehicle-details scroll-reveal fade-up" data-reveal-delay="320">
 
                 <h2>Vehicle Information</h2>
 
                 <div class="details-grid scroll-reveal fade-up" data-reveal-delay="360">
-            
+
                     <div class="info-card">
                         <i class="fa-solid fa-id-card"></i>
                         <h4>Number Plate</h4>
@@ -543,19 +563,19 @@
                     <div class="info-card">
                         <i class="fa-solid fa-building"></i>
                         <h4>Company</h4>
-                   <p id="company">Hyundai</p>
+                        <p id="company">Hyundai</p>
                     </div>
 
                     <div class="info-card">
                         <i class="fa-solid fa-car-side"></i>
                         <h4>Vehicle Model</h4>
-                     <p id="model">Creta SX</p>
+                        <p id="model">Creta SX</p>
                     </div>
 
                     <div class="info-card">
                         <i class="fa-solid fa-car"></i>
                         <h4>Vehicle Type</h4>
-                         <p id="type">SUV</p>
+                        <p id="type">SUV</p>
                     </div>
 
                     <div class="info-card">
