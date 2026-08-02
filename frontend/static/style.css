@@ -1711,239 +1711,87 @@ header {
     transform: perspective(1200px) translateY(-8px) rotateX(3deg) rotateY(5deg);
 }
 
-/* ================= Hero animated background ================= */
+/* ================= Hero cinematic background ================= */
 .hero-content {
     isolation: isolate;
+    position: relative;
+    overflow: hidden;
 }
 
-.hero-background {
+.hero-media {
     position: absolute;
     inset: 0;
     overflow: hidden;
     border-radius: inherit;
-    pointer-events: none;
     z-index: 0;
-    --hero-parallax-x: 0px;
-    --hero-parallax-y: 0px;
-    transform: translate3d(var(--hero-parallax-x), var(--hero-parallax-y), 0);
-    transition: transform 0.35s ease-out;
-}
-
-.hero-background::before {
-    content: '';
-    position: absolute;
-    inset: -12% -8% -16% -8%;
-    background:
-        radial-gradient(circle at 18% 16%, rgba(59, 130, 246, 0.2), transparent 23%),
-        radial-gradient(circle at 82% 18%, rgba(245, 158, 11, 0.16), transparent 20%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 46%);
-    transform: perspective(1400px) rotateX(66deg) translateY(18%);
-    transform-origin: 50% 100%;
-    filter: blur(0.2px);
-    opacity: 0.96;
-}
-
-.hero-road {
-    position: absolute;
-    left: -16%;
-    right: -16%;
-    bottom: -14%;
-    height: 64%;
-    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-    background: linear-gradient(180deg, rgba(6, 10, 24, 0.46) 0%, rgba(3, 5, 14, 0.98) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.05), inset 0 -28px 70px rgba(0, 0, 0, 0.4);
-    transform: perspective(1400px) rotateX(64deg);
-    transform-origin: 50% 100%;
-}
-
-.hero-road::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 34px);
-    opacity: 0.34;
-    mix-blend-mode: screen;
-    animation: roadFlow 10s linear infinite;
-}
-
-.hero-road-glow {
-    position: absolute;
-    left: 10%;
-    right: 10%;
-    bottom: 8%;
-    height: 42%;
-    border-radius: 999px;
-    background: linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.22) 18%, rgba(245, 158, 11, 0.16) 50%, rgba(59, 130, 246, 0.2) 82%, transparent 100%);
-    filter: blur(24px);
-    transform: perspective(1600px) rotateX(62deg);
-    opacity: 0.72;
-    animation: roadGlow 8s ease-in-out infinite;
-}
-
-.hero-road-lines {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 14%;
-    height: 58%;
-    background: linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.18) 18%, transparent 34%, rgba(245, 158, 11, 0.16) 50%, transparent 66%, rgba(59, 130, 246, 0.16) 84%, transparent 100%);
-    transform: perspective(1600px) rotateX(64deg);
-    opacity: 0.65;
-    filter: blur(18px);
-    animation: lineDrift 7s ease-in-out infinite;
-}
-
-.hero-light-streak {
-    position: absolute;
-    bottom: 24%;
-    width: 34%;
-    height: 8px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.8) 16%, rgba(59, 130, 246, 0.95) 48%, rgba(245, 158, 11, 0.95) 56%, transparent 100%);
-    box-shadow: 0 0 18px rgba(255, 255, 255, 0.15);
-    filter: blur(6px);
-    opacity: 0.72;
-    animation: streakDrift 10s linear infinite;
-}
-
-.hero-light-streak-1 {
-    left: -18%;
-    transform: rotate(-8deg);
-    animation-duration: 11s;
-}
-
-.hero-light-streak-2 {
-    left: 20%;
-    width: 28%;
-    bottom: 31%;
-    animation-duration: 9s;
-    animation-delay: -2s;
-}
-
-.hero-light-streak-3 {
-    right: -16%;
-    width: 32%;
-    bottom: 20%;
-    transform: rotate(8deg);
-    animation-duration: 12s;
-    animation-delay: -4s;
-}
-
-.hero-car {
-    position: absolute;
-    bottom: 20%;
-    left: -26%;
-    width: min(34vw, 280px);
-    height: 92px;
-    z-index: 1;
+    transform: translate3d(0, 0, 0);
     will-change: transform;
-    animation: heroCarDrive 14s linear infinite;
-    filter: drop-shadow(0 12px 36px rgba(0, 0, 0, 0.32));
 }
 
-.hero-car-body {
-    position: absolute;
-    left: 14px;
-    top: 10px;
-    width: calc(100% - 24px);
-    height: 56px;
-    border-radius: 36px 42px 22px 22px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(148, 163, 184, 0.2) 26%, rgba(15, 23, 42, 0.96) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: inset 0 -4px 10px rgba(255, 255, 255, 0.14), inset 0 3px 8px rgba(59, 130, 246, 0.16);
-}
-
-.hero-car-body::before {
-    content: '';
-    position: absolute;
-    left: 26px;
-    top: -2px;
-    width: 54%;
-    height: 22px;
-    border-radius: 24px 24px 10px 10px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(148, 163, 184, 0.35));
-    opacity: 0.8;
-}
-
-.hero-car-glow {
-    position: absolute;
-    left: 24px;
-    top: 8px;
-    width: calc(100% - 42px);
-    height: 40px;
-    border-radius: 999px;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.45) 0%, rgba(59, 130, 246, 0) 72%);
-    filter: blur(22px);
-    opacity: 0.84;
-    animation: carGlow 2.8s ease-in-out infinite;
-}
-
-.hero-car-wheel {
-    position: absolute;
-    bottom: 2px;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #0f172a 0 28%, #111827 28% 46%, #020617 46% 100%);
-    box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.06);
-}
-
-.hero-car-wheel-left {
-    left: 27px;
-}
-
-.hero-car-wheel-right {
-    right: 27px;
-}
-
-.hero-car-headlight {
-    position: absolute;
-    right: 14px;
-    top: 34px;
-    width: 16px;
-    height: 10px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(251, 191, 36, 0.9));
-    box-shadow: 0 0 18px rgba(251, 191, 36, 0.4);
-}
-
-.hero-float {
-    position: absolute;
-    display: block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.82);
-    box-shadow: 0 0 16px rgba(255, 255, 255, 0.32);
-    opacity: 0.72;
-    animation: floatParticle 8s ease-in-out infinite;
-}
-
-.hero-float-1 {
-    top: 22%;
-    left: 18%;
-}
-
-.hero-float-2 {
-    top: 36%;
-    right: 22%;
-    animation-duration: 10s;
-}
-
-.hero-float-3 {
-    bottom: 28%;
-    left: 32%;
-    animation-duration: 9s;
-}
-
-.hero-scanline {
+.hero-video {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.12) 35%, transparent 100%);
-    mix-blend-mode: screen;
-    opacity: 0.5;
-    animation: scanPulse 5s ease-in-out infinite;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: saturate(1.05) contrast(1.05) brightness(0.9);
+    transform: scale(1.06);
+}
+
+.hero-video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.58) 0%, rgba(0, 0, 0, 0.28) 45%, rgba(0, 0, 0, 0.48) 100%);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.hero-video-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 28% 22%, rgba(255, 255, 255, 0.15), transparent 26%),
+                radial-gradient(circle at 78% 16%, rgba(59, 130, 246, 0.22), transparent 24%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 35%);
+    filter: blur(10px);
+    pointer-events: none;
+}
+
+.hero-particles {
+    z-index: 1;
+}
+
+.hero-grid {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-copy {
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 12px 30px rgba(0, 0, 0, 0.38);
+}
+
+.hero-copy h1 {
+    text-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.24));
+}
+
+.hero-copy p {
+    max-width: 620px;
+}
+
+.hero-eyebrow {
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.hero-actions button,
+.hero-actions .secondary-link {
+    backdrop-filter: blur(8px);
+}
+
+.hero-visual {
+    min-height: 220px;
 }
 
 @keyframes pageFade {
@@ -1966,45 +1814,9 @@ header {
     50% { transform: translate(12px, -18px) scale(1.2); opacity: 0.45; }
 }
 
-@keyframes roadFlow {
-    0% { transform: translateX(-4%); }
-    100% { transform: translateX(4%); }
-}
-
-@keyframes roadGlow {
-    0%, 100% { opacity: 0.55; transform: scaleX(0.94); }
-    50% { opacity: 0.9; transform: scaleX(1.03); }
-}
-
-@keyframes lineDrift {
-    0%, 100% { transform: perspective(1600px) rotateX(64deg) translateX(-3%); }
-    50% { transform: perspective(1600px) rotateX(64deg) translateX(3%); }
-}
-
-@keyframes streakDrift {
-    0% { transform: translate3d(-24vw, 0, 0) rotate(-8deg); opacity: 0; }
-    8% { opacity: 0.7; }
-    100% { transform: translate3d(132vw, 0, 0) rotate(-8deg); opacity: 0; }
-}
-
-@keyframes heroCarDrive {
-    0% { transform: translate3d(-32vw, 0, 0) scale(0.92); }
-    100% { transform: translate3d(132vw, 0, 0) scale(1); }
-}
-
-@keyframes carGlow {
-    0%, 100% { opacity: 0.72; transform: scale(0.96); }
-    50% { opacity: 1; transform: scale(1.04); }
-}
-
 @keyframes floatParticle {
     0%, 100% { transform: translateY(0); opacity: 0.6; }
     50% { transform: translateY(-10px); opacity: 0.95; }
-}
-
-@keyframes scanPulse {
-    0%, 100% { transform: translateY(-6%); opacity: 0.4; }
-    50% { transform: translateY(6%); opacity: 0.7; }
 }
 
 @media (max-width: 960px) {
@@ -2059,13 +1871,8 @@ body[data-theme='light'] .hero-content {
     box-shadow: 0 32px 80px rgba(148, 163, 184, 0.25);
 }
 
-body[data-theme='light'] .hero-road {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(226, 232, 240, 0.9) 100%);
-}
-
-body[data-theme='light'] .hero-road-glow,
-body[data-theme='light'] .hero-road-lines {
-    opacity: 0.55;
+body[data-theme='light'] .hero-video-overlay {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.56) 0%, rgba(255, 255, 255, 0.2) 45%, rgba(255, 255, 255, 0.5) 100%);
 }
 
 body[data-theme='light'] .hero-content::before {

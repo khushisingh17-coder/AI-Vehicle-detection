@@ -112,22 +112,21 @@ const scrollTopBtn = document.getElementById('scrollTopBtn');
 const detectBtn = document.querySelector('.detect');
 const cameraBtn = document.querySelector('.camera');
 const heroContent = document.querySelector('.hero-content');
-const heroBackground = document.querySelector('.hero-background');
+const heroMedia = document.querySelector('.hero-media');
 
-// ================= Hero background parallax =================
-if (heroContent && heroBackground && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    heroContent.addEventListener('pointermove', (event) => {
+// ================= Hero cinematic parallax =================
+if (heroContent && heroMedia) {
+    const applyHeroParallax = () => {
         const rect = heroContent.getBoundingClientRect();
-        const offsetX = ((event.clientX - rect.left) / rect.width - 0.5) * 8;
-        const offsetY = ((event.clientY - rect.top) / rect.height - 0.5) * 8;
-        heroBackground.style.setProperty('--hero-parallax-x', `${offsetX}px`);
-        heroBackground.style.setProperty('--hero-parallax-y', `${offsetY}px`);
-    });
+        const viewportHeight = window.innerHeight;
+        const scrollDistance = Math.max(0, (viewportHeight - rect.top) * 0.04);
+        const offsetY = Math.max(-10, Math.min(10, scrollDistance - 25));
+        heroMedia.style.transform = `translate3d(0, ${offsetY}px, 0) scale(1.05)`;
+    };
 
-    heroContent.addEventListener('pointerleave', () => {
-        heroBackground.style.setProperty('--hero-parallax-x', '0px');
-        heroBackground.style.setProperty('--hero-parallax-y', '0px');
-    });
+    window.addEventListener('scroll', applyHeroParallax, { passive: true });
+    window.addEventListener('resize', applyHeroParallax);
+    applyHeroParallax();
 }
 
 const formatValue = (value) => {
