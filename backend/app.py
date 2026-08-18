@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, jsonify, send_from_directory
 import os
+from detector import detect_vehicles
 
 # Base directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -55,20 +56,14 @@ def upload():
 
     print("IMAGE SAVED AT :", save_path)
 
-    return jsonify({
-    "success": True,
-    "filename": image.filename,
+    # Call vehicle detection
+    detected_vehicles = detect_vehicles(save_path)
 
-    "plate": "UP32 AB 1234",
-    "company": "Hyundai",
-    "model": "Creta SX",
-    "type": "SUV",
-    "color": "White",
-    "state": "Uttar Pradesh",
-    "confidence": "98.7%",
-    "owner": "Rahul Sharma",
-    "status": "Valid"
-})
+    return jsonify({
+        "success": True,
+        "filename": image.filename,
+        "detections": detected_vehicles
+    })
 
 # Show uploaded image
 @app.route("/uploads/<path:filename>")

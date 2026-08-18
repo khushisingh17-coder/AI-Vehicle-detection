@@ -146,34 +146,100 @@ detectBtn?.addEventListener("click", async (e) => {
     }
 
     showToast("Uploading image...");
+    updateStatus("Processing image with AI...");
 
-   const formData = new FormData();
+    const formData = new FormData();
+    formData.append("image", fileInput.files[0]);
 
-formData.append("image", fileInput.files[0]);
+    try {
+        const response = await fetch("/upload", {
+            method: "POST",
+            body: formData
+        });
 
-    const response = await fetch("/upload", {
-        method: "POST",
-        body: formData
-    });
+        if (!response.ok) {
+            throw new Error(`Upload failed: ${response.statusText}`);
+        }
 
-    const data = await response.json();
+        const data = await response.json();
+        console.log("Detection results:", data);
 
-    console.log(data);
+        if (!data.success) {
+            showToast(`Error: ${data.message}`, 'error');
+            updateStatus("Upload failed");
+            return;
+        }
 
-    document.getElementById("plate").innerText = data.plate;
-    document.getElementById("company").innerText = data.company;
-    document.getElementById("model").innerText = data.model;
-    document.getElementById("type").innerText = data.type;
-    document.getElementById("color").innerText = data.color;
-    document.getElementById("state").innerText = data.state;
-    document.getElementById("confidence").innerText = data.confidence;
-    document.getElementById("status").innerText = data.status;
-    document.getElementById("owner").innerText = data.owner;
+        // Display uploaded image
+        document.getElementById("uploadedImage").src = "/uploads/" + data.filename;
+        document.getElementById("processedImage").src = "/uploads/" + data.filename;
 
-    document.getElementById("uploadedImage").src = "/uploads/" + data.filename;
-    document.getElementById("processedImage").src = "/uploads/" + data.filename;
+        // Display detection results
+        const detailsGrid = document.querySelector('.details-grid');
+        
+        if (!data.detections || data.detections.length === 0) {
+            // No vehicles detected
+            detailsGrid.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+                    <i class="fa-solid fa-circle-info" style="font-size: 48px; opacity: 0.6; margin-bottom: 15px; display: block;"></i>
+                    <h4 style="margin: 0 0 10px 0; opacity: 0.8;">No Vehicles Detected</h4>
+                    <p style="margin: 0; opacity: 0.6; font-size: 14px;">The uploaded image does not contain any detectable vehicles (cars, trucks, buses, or motorcycles).</p>
+                </div>
+            `;
+            showToast("No vehicles detected in the image.", 'warning');
+            updateStatus("No vehicles found");
+        } else {
+            // Display detected vehicles
+            let detectionHTML = '';
+            
+            detectionHTML += `
+                <div style="grid-column: 1 / -1; padding-bottom: 20px; border-bottom: 1px solid rgba(245, 158, 11, 0.2);">
+                    <h4 style="margin: 0 0 15px 0; font-size: 16px;">
+                        <i class="fa-solid fa-check-circle" style="color: #10b981; margin-right: 8px;"></i>
+                        Detected Vehicles (${data.detections.length} found)
+                    </h4>
+                </div>
+            `;
 
-    showToast("Vehicle detected successfully!");
+            data.detections.forEach((detection, index) => {
+                const vehicleEmoji = {
+                    'car': '🚗',
+                    'truck': '🚚',
+                    'bus': '🚌',
+                    'motorcycle': '🏍️'
+                }[detection.vehicle] || '🚙';
+
+                detectionHTML += `
+                    <div class="info-card" style="animation: fadeIn 0.4s ease-out ${index * 0.1}s backwards;">
+                        <i class="fa-solid fa-circle-check" style="color: #10b981;"></i>
+                        <h4>${vehicleEmoji} ${detection.vehicle.charAt(0).toUpperCase() + detection.vehicle.slice(1)}</h4>
+                        <p style="font-size: 18px; font-weight: 600; color: #f59e0b;">
+                            ${detection.confidence}%
+                        </p>
+                        <p style="font-size: 12px; opacity: 0.7; margin-top: 5px;">
+                            Confidence Score
+                        </p>
+                    </div>
+                `;
+            });
+
+            detailsGrid.innerHTML = detectionHTML;
+            showToast(`Successfully detected ${data.detections.length} vehicle(s)!`, 'success');
+            updateStatus("Detection complete");
+        }
+
+    } catch (error) {
+        console.error("Detection error:", error);
+        showToast(`Error: ${error.message}`, 'error');
+        updateStatus("Detection failed");
+        document.querySelector('.details-grid').innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: #ef4444;">
+                <i class="fa-solid fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 15px; display: block;"></i>
+                <h4 style="margin: 0 0 10px 0;">Detection Failed</h4>
+                <p style="margin: 0; font-size: 14px;">${error.message}</p>
+            </div>
+        `;
+    }
 
 });
 cameraBtn?.addEventListener('click', () => {
