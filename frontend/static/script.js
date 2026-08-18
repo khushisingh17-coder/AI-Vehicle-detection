@@ -134,6 +134,76 @@ const formatValue = (value) => {
 };
 const uploadForm = document.getElementById("uploadForm");
 
+const renderDetectionResults = (data) => {
+    const detailsGrid = document.querySelector('.details-grid');
+    if (!detailsGrid) return;
+
+    const detections = Array.isArray(data?.detections) ? data.detections : [];
+
+    if (detections.length === 0) {
+        detailsGrid.innerHTML = `
+            <div class="info-card" style="grid-column: 1 / -1; text-align: center; padding: 32px 20px;">
+                <i class="fa-solid fa-circle-info" style="font-size: 42px; opacity: 0.7; margin-bottom: 12px; display: block;"></i>
+                <h4 style="margin: 0 0 8px 0;">No vehicles detected</h4>
+                <p style="margin: 0; opacity: 0.7; font-size: 14px;">The uploaded image does not contain any recognizable vehicles.</p>
+            </div>
+        `;
+        updateStatus("No vehicles found");
+        showToast("No vehicles detected in the image.", 'warning');
+        return;
+    }
+
+    const vehicleEmoji = {
+        car: '🚗',
+        truck: '🚚',
+        bus: '🚌',
+        motorcycle: '🏍️'
+    };
+
+    detailsGrid.innerHTML = `
+        <div style="grid-column: 1 / -1; padding-bottom: 16px; border-bottom: 1px solid rgba(245, 158, 11, 0.2);">
+            <h4 style="margin: 0; font-size: 16px;">
+                <i class="fa-solid fa-check-circle" style="color: #10b981; margin-right: 8px;"></i>
+                Detected Vehicles (${detections.length})
+            </h4>
+        </div>
+        ${detections.map((detection, index) => {
+            const vehicleType = detection.vehicle || 'vehicle';
+            const label = vehicleType.charAt(0).toUpperCase() + vehicleType.slice(1);
+            const confidence = Number(detection.confidence ?? 0);
+            const displayConfidence = Number.isFinite(confidence) ? `${confidence.toFixed(2)}%` : '0.00%';
+            const emoji = vehicleEmoji[vehicleType] || '🚙';
+
+            return `
+                <div class="info-card" style="animation: fadeIn 0.4s ease-out ${index * 0.08}s backwards;">
+                    <i class="fa-solid fa-circle-check" style="color: #10b981;"></i>
+                    <h4>${emoji} ${label}</h4>
+                    <p style="font-size: 18px; font-weight: 600; color: #f59e0b;">${displayConfidence}</p>
+                    <p style="font-size: 12px; opacity: 0.7; margin-top: 5px;">Confidence Score</p>
+                </div>
+            `;
+        }).join('')}
+    `;
+
+    updateStatus("Detection complete");
+    showToast(`Successfully detected ${detections.length} vehicle(s)!`, 'success');
+};
+
+const renderDetectionError = (message) => {
+    const detailsGrid = document.querySelector('.details-grid');
+    if (!detailsGrid) return;
+
+    detailsGrid.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 32px 20px; color: #ef4444;">
+            <i class="fa-solid fa-exclamation-triangle" style="font-size: 42px; margin-bottom: 12px; display: block;"></i>
+            <h4 style="margin: 0 0 8px 0;">Detection failed</h4>
+            <p style="margin: 0; opacity: 0.7; font-size: 14px;">${message}</p>
+        </div>
+    `;
+    updateStatus("Detection failed");
+    showToast(message, 'error');
+};
+
 detectBtn?.addEventListener("click", async (e) => {
 
     e.preventDefault();
@@ -141,7 +211,7 @@ detectBtn?.addEventListener("click", async (e) => {
     const fileInput = document.getElementById("fileInput");
 
     if (fileInput.files.length === 0) {
-        showToast("Please select an image first.");
+        showToast("Please select an image first.", 'warning');
         return;
     }
 
@@ -165,80 +235,17 @@ detectBtn?.addEventListener("click", async (e) => {
         console.log("Detection results:", data);
 
         if (!data.success) {
-            showToast(`Error: ${data.message}`, 'error');
-            updateStatus("Upload failed");
+            renderDetectionError(data.message || 'Upload was unsuccessful.');
             return;
         }
 
-        // Display uploaded image
         document.getElementById("uploadedImage").src = "/uploads/" + data.filename;
         document.getElementById("processedImage").src = "/uploads/" + data.filename;
-
-        // Display detection results
-        const detailsGrid = document.querySelector('.details-grid');
-        
-        if (!data.detections || data.detections.length === 0) {
-            // No vehicles detected
-            detailsGrid.innerHTML = `
-                <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
-                    <i class="fa-solid fa-circle-info" style="font-size: 48px; opacity: 0.6; margin-bottom: 15px; display: block;"></i>
-                    <h4 style="margin: 0 0 10px 0; opacity: 0.8;">No Vehicles Detected</h4>
-                    <p style="margin: 0; opacity: 0.6; font-size: 14px;">The uploaded image does not contain any detectable vehicles (cars, trucks, buses, or motorcycles).</p>
-                </div>
-            `;
-            showToast("No vehicles detected in the image.", 'warning');
-            updateStatus("No vehicles found");
-        } else {
-            // Display detected vehicles
-            let detectionHTML = '';
-            
-            detectionHTML += `
-                <div style="grid-column: 1 / -1; padding-bottom: 20px; border-bottom: 1px solid rgba(245, 158, 11, 0.2);">
-                    <h4 style="margin: 0 0 15px 0; font-size: 16px;">
-                        <i class="fa-solid fa-check-circle" style="color: #10b981; margin-right: 8px;"></i>
-                        Detected Vehicles (${data.detections.length} found)
-                    </h4>
-                </div>
-            `;
-
-            data.detections.forEach((detection, index) => {
-                const vehicleEmoji = {
-                    'car': '🚗',
-                    'truck': '🚚',
-                    'bus': '🚌',
-                    'motorcycle': '🏍️'
-                }[detection.vehicle] || '🚙';
-
-                detectionHTML += `
-                    <div class="info-card" style="animation: fadeIn 0.4s ease-out ${index * 0.1}s backwards;">
-                        <i class="fa-solid fa-circle-check" style="color: #10b981;"></i>
-                        <h4>${vehicleEmoji} ${detection.vehicle.charAt(0).toUpperCase() + detection.vehicle.slice(1)}</h4>
-                        <p style="font-size: 18px; font-weight: 600; color: #f59e0b;">
-                            ${detection.confidence}%
-                        </p>
-                        <p style="font-size: 12px; opacity: 0.7; margin-top: 5px;">
-                            Confidence Score
-                        </p>
-                    </div>
-                `;
-            });
-
-            detailsGrid.innerHTML = detectionHTML;
-            showToast(`Successfully detected ${data.detections.length} vehicle(s)!`, 'success');
-            updateStatus("Detection complete");
-        }
+        renderDetectionResults(data);
 
     } catch (error) {
         console.error("Detection error:", error);
-        showToast(`Error: ${error.message}`, 'error');
-        updateStatus("Detection failed");
-        document.querySelector('.details-grid').innerHTML = `
-            <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: #ef4444;">
-                <i class="fa-solid fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 15px; display: block;"></i>
-                <h4 style="margin: 0 0 10px 0;">Detection Failed</h4>
-                <p style="margin: 0; font-size: 14px;">${error.message}</p>
-            </div>
-        `;
+        renderDetectionError(error.message || 'An unexpected error occurred.');
     }
 
 });
