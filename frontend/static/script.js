@@ -166,7 +166,7 @@ const renderDetectionResults = (data) => {
         <div style="grid-column: 1 / -1; padding-bottom: 16px; border-bottom: 1px solid rgba(245, 158, 11, 0.2);">
             <h4 style="margin: 0; font-size: 16px;">
                 <i class="fa-solid fa-check-circle" style="color: #10b981; margin-right: 8px;"></i>
-                Detected Vehicles (${detections.length})
+                Total Detected Vehicles: ${detections.length}
             </h4>
         </div>
         ${detections.map((detection, index) => {
@@ -401,7 +401,7 @@ const initCharts = () => {
             new Chart(cctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Hyundai', 'Tata', 'Mahindra', 'Others'],
+                    labels: ['Cars', 'Motorcycles', 'Buses', 'Trucks'],
                     datasets: [{
                         data: [34, 22, 18, 26],
                         backgroundColor: colors.map(c => c),

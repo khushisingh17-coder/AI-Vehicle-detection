@@ -232,32 +232,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>10:42 PM</td>
-                                <td>UP32 AB 1234</td>
-                                <td>Hyundai</td>
-                                <td>UP</td>
-                                <td><span class="status-badge status-success">Valid</span></td>
-                            </tr>
-                            <tr>
-                                <td>10:31 PM</td>
-                                <td>DL8CAF 0456</td>
-                                <td>Tesla</td>
-                                <td>DL</td>
-                                <td><span class="status-badge status-warning">Review</span></td>
-                            </tr>
-                            <tr>
-                                <td>09:58 PM</td>
-                                <td>MH12KL 7890</td>
-                                <td>BMW</td>
-                                <td>MH</td>
-                                <td><span class="status-badge status-success">Valid</span></td>
-                            </tr>
-                            <tr>
-                                <td>09:12 PM</td>
-                                <td>HR26DX 3344</td>
-                                <td>Ford</td>
-                                <td>HR</td>
-                                <td><span class="status-badge status-alert">Alert</span></td>
+                                <td colspan="5">No detection history available yet.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -610,8 +585,8 @@
 
                 <div class="stat-card">
                     <i class="fa-solid fa-chart-line"></i>
-                    <h1>98.7%</h1>
-                    <p>Detection Accuracy</p>
+                    <h1>Live</h1>
+                    <p>Model Output</p>
                 </div>
 
             </div>
@@ -619,23 +594,15 @@
             <!-- ================= Graph Section ================= -->
 
             <div class="graph-container">
-
                 <div class="graph-card scroll-reveal fade-left" data-reveal-delay="260">
-
                     <h3>Vehicle Detection Analytics</h3>
-
                     <canvas id="vehicleChart"></canvas>
-
                 </div>
 
                 <div class="graph-card scroll-reveal fade-right" data-reveal-delay="280">
-
                     <h3>Company Distribution</h3>
-
                     <canvas id="companyChart"></canvas>
-
                 </div>
-
             </div>
 
         </section>
@@ -645,192 +612,47 @@
         <!-- ===================================================== -->
 
         <section class="search-section scroll-reveal fade-up" data-reveal-delay="140">
-
             <div class="search-box scroll-reveal fade-up" data-reveal-delay="180">
-
                 <input type="text" placeholder="Search by Vehicle Number...">
-
                 <button>
-
                     <i class="fa-solid fa-magnifying-glass"></i>
-
                     Search
-
                 </button>
-
             </div>
-
         </section>
-
 
         <!-- ===================================================== -->
         <!--              DETECTION HISTORY                        -->
         <!-- ===================================================== -->
 
         <section id="history" class="history-section scroll-reveal fade-up" data-reveal-delay="160">
-
             <div class="section-title">
-
                 <h2>Detection History</h2>
-
                 <p>Previously detected vehicles.</p>
-
             </div>
 
             <div class="history-table">
-
                 <table>
-
                     <thead>
-
                         <tr>
-
                             <th>Date</th>
-
                             <th>Vehicle No.</th>
-
                             <th>Company</th>
-
                             <th>Model</th>
-
                             <th>Type</th>
-
                             <th>Color</th>
-
                             <th>State</th>
-
                             <th>Status</th>
-
                             <th>Confidence</th>
-
                         </tr>
-
                     </thead>
-
                     <tbody>
-
                         <tr>
-
-                            <td>02-07-2026</td>
-
-                            <td>UP32AB1234</td>
-
-                            <td>Hyundai</td>
-
-                            <td>Creta</td>
-
-                            <td>SUV</td>
-
-                            <td>White</td>
-
-                            <td>UP</td>
-
-                            <td>
-                                <span class="valid">
-                                    Valid
-                                </span>
-                            </td>
-
-                            <td>98%</td>
-
+                            <td colspan="9">No detection history available yet.</td>
                         </tr>
-
-                        <tr>
-
-                            <td>02-07-2026</td>
-
-                            <td>PB08CD4567</td>
-
-                            <td>Mahindra</td>
-
-                            <td>Scorpio</td>
-
-                            <td>SUV</td>
-
-                            <td>Black</td>
-
-                            <td>Punjab</td>
-
-                            <td>
-
-                                <span class="warning">
-
-                                    Suspicious
-
-                                </span>
-
-                            </td>
-
-                            <td>94%</td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td>02-07-2026</td>
-
-                            <td>DL05EF9876</td>
-
-                            <td>Tata</td>
-
-                            <td>Nexon</td>
-
-                            <td>SUV</td>
-
-                            <td>Blue</td>
-
-                            <td>Delhi</td>
-
-                            <td>
-
-                                <span class="valid">
-
-                                    Valid
-
-                                </span>
-
-                            </td>
-
-                            <td>99%</td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td>01-07-2026</td>
-
-                            <td>HR26XY6543</td>
-
-                            <td>Kia</td>
-
-                            <td>Seltos</td>
-
-                            <td>SUV</td>
-
-                            <td>Grey</td>
-
-                            <td>Haryana</td>
-
-                            <td>
-
-                                <span class="valid">
-
-                                    Valid
-
-                                </span>
-
-                            </td>
-
-                            <td>97%</td>
-
-                        </tr>
-
                     </tbody>
-
                 </table>
-
             </div>
-
         </section>
 
         <!-- ===================================================== -->
