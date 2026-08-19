@@ -60,6 +60,8 @@ def upload():
         }), 400
 
     save_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+    processed_filename = f"{os.path.splitext(filename)[0]}_processed.jpg"
+    processed_path = os.path.join(app.config["UPLOAD_FOLDER"], processed_filename)
 
     try:
         image.save(save_path)
@@ -74,11 +76,12 @@ def upload():
         print("IMAGE SAVED AT :", save_path)
 
         # Call vehicle detection
-        detected_vehicles = detect_vehicles(save_path)
+        detected_vehicles = detect_vehicles(save_path, processed_path)
     except Exception:
-        if os.path.exists(save_path):
-            os.remove(save_path)
-        app.logger.exception("Vehicle detection failed")
+        for file_path in (save_path, processed_path):
+            if os.path.exists(file_path):
+                os.remove(file_path)
+        app.logger.exception("Vehicle detection or image processing failed")
         return jsonify({
             "success": False,
             "message": "Vehicle detection failed. Please try another image."
@@ -87,6 +90,7 @@ def upload():
     return jsonify({
         "success": True,
         "filename": filename,
+        "processed_filename": processed_filename,
         "detections": detected_vehicles
     })
 

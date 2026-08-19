@@ -5,7 +5,7 @@ import cv2
 model = YOLO("yolov8n.pt")
 
 
-def detect_vehicles(image_path):
+def detect_vehicles(image_path, processed_image_path=None):
 
     image = cv2.imread(image_path)
 
@@ -35,10 +35,30 @@ def detect_vehicles(image_path):
             if class_id in vehicle_classes:
 
                 vehicle_name = vehicle_classes[class_id]
+                confidence_percent = round(confidence * 100, 2)
 
                 detected_vehicles.append({
                     "vehicle": vehicle_name,
-                    "confidence": round(confidence * 100, 2)
+                    "confidence": confidence_percent
                 })
+
+                if processed_image_path:
+                    x1, y1, x2, y2 = map(int, box.xyxy[0].tolist())
+                    label = f"{vehicle_name} {confidence_percent:.2f}%"
+                    cv2.rectangle(image, (x1, y1), (x2, y2), (0, 200, 255), 2)
+                    label_y = max(y1 - 10, 20)
+                    cv2.putText(
+                        image,
+                        label,
+                        (x1, label_y),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.6,
+                        (0, 200, 255),
+                        2,
+                        cv2.LINE_AA
+                    )
+
+    if processed_image_path and not cv2.imwrite(processed_image_path, image):
+        raise OSError("Unable to save processed image")
 
     return detected_vehicles

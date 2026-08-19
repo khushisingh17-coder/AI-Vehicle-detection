@@ -251,7 +251,7 @@ detectBtn?.addEventListener("click", async (e) => {
             return;
         }
 
-        if (!data.filename || !Array.isArray(data.detections)) {
+        if (!data.filename || !data.processed_filename || !Array.isArray(data.detections)) {
             throw new Error('The server returned incomplete detection results.');
         }
 
@@ -264,7 +264,7 @@ detectBtn?.addEventListener("click", async (e) => {
         uploadedImage.onerror = handleResultImageError;
         processedImage.onerror = handleResultImageError;
         uploadedImage.src = "/uploads/" + encodeURIComponent(data.filename);
-        processedImage.src = "/uploads/" + encodeURIComponent(data.filename);
+        processedImage.src = "/uploads/" + encodeURIComponent(data.processed_filename);
         renderDetectionResults(data);
 
     } catch (error) {
