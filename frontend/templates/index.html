@@ -251,7 +251,7 @@
                         <h2>Upload Vehicle Image</h2>
                         <p>Upload an image to identify the vehicle and analyze its details with the AI engine.</p>
                     </div>
-                    <span class="upload-status" id="uploadStatus">Ready to scan</span>
+                    <span class="upload-status" id="uploadStatus" role="status" aria-live="polite">Ready to scan</span>
                 </div>
 
                 <div class="upload-grid scroll-reveal fade-up" data-reveal-delay="260">
@@ -267,7 +267,8 @@
                             <p>or browse your device to upload a photo</p>
                             <button type="button" class="browse-btn">Browse file</button>
                         </div>
-                        <input type="file" id="fileInput" name="image" accept="image/*">
+                        <input type="file" id="fileInput" name="image" accept=".jpg,.jpeg,.png,.bmp,.webp" aria-describedby="uploadHelp">
+                        <span id="uploadHelp" class="sr-only">Supported formats: JPG, JPEG, PNG, BMP, and WEBP. Maximum size: 10 megabytes.</span>
                         <div class="progress-wrapper" id="progressWrapper" hidden>
                             <span class="progress-label">Uploading image...</span>
                             <div class="progress-track">
@@ -288,7 +289,7 @@
             </div>
 
             <div class="buttons scroll-reveal fade-up" data-reveal-delay="340">
-                <button type="submit" class="detect">
+                <button type="submit" class="detect" aria-busy="false">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     Detect Vehicle
                 </button>
@@ -555,38 +556,38 @@
 
                 <div class="stat-card scroll-reveal fade-up" data-reveal-delay="200">
                     <i class="fa-solid fa-car"></i>
-                    <h1>1250+</h1>
+                    <h1 data-stat="total">0</h1>
                     <p>Total Vehicles</p>
                 </div>
 
                 <div class="stat-card">
                     <i class="fa-solid fa-car-side"></i>
-                    <h1>720</h1>
+                    <h1 data-stat="car">0</h1>
                     <p>Cars</p>
                 </div>
 
                 <div class="stat-card">
                     <i class="fa-solid fa-motorcycle"></i>
-                    <h1>280</h1>
-                    <p>Bikes</p>
+                    <h1 data-stat="motorcycle">0</h1>
+                    <p>Motorcycles</p>
                 </div>
 
                 <div class="stat-card">
                     <i class="fa-solid fa-truck"></i>
-                    <h1>160</h1>
+                    <h1 data-stat="truck">0</h1>
                     <p>Trucks</p>
                 </div>
 
                 <div class="stat-card">
                     <i class="fa-solid fa-bus"></i>
-                    <h1>90</h1>
+                    <h1 data-stat="bus">0</h1>
                     <p>Buses</p>
                 </div>
 
                 <div class="stat-card">
                     <i class="fa-solid fa-chart-line"></i>
-                    <h1>Live</h1>
-                    <p>Model Output</p>
+                    <h1 data-stat="average_confidence">0%</h1>
+                    <p>Average Confidence</p>
                 </div>
 
             </div>

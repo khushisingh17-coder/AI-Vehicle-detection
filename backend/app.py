@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template, jsonify, send_from_directory
 import os
 import cv2
+import uuid
+from collections import Counter
 from werkzeug.utils import secure_filename
 from detector import detect_vehicles
 
@@ -18,6 +20,7 @@ app = Flask(
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024
 ALLOWED_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
 
 
@@ -31,6 +34,14 @@ def home():
 @app.route("/about")
 def about():
     return "Welcome to AI Vehicle Intelligence Backend"
+
+
+@app.errorhandler(413)
+def request_entity_too_large(error):
+    return jsonify({
+        "success": False,
+        "message": "Image is too large. Please choose an image under 10 MB."
+    }), 413
 
 
 # Upload Image
@@ -60,6 +71,10 @@ def upload():
         }), 400
 
     save_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+    if os.path.exists(save_path):
+        name, extension = os.path.splitext(filename)
+        filename = f"{name}_{uuid.uuid4().hex[:8]}{extension}"
+        save_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
     processed_filename = f"{os.path.splitext(filename)[0]}_processed.jpg"
     processed_path = os.path.join(app.config["UPLOAD_FOLDER"], processed_filename)
 
@@ -87,11 +102,26 @@ def upload():
             "message": "Vehicle detection failed. Please try another image."
         }), 500
 
+    vehicle_counts = Counter(detection["vehicle"] for detection in detected_vehicles)
+    total_vehicles = len(detected_vehicles)
+    average_confidence = (
+        sum(detection["confidence"] for detection in detected_vehicles) / total_vehicles
+        if total_vehicles else 0
+    )
+
     return jsonify({
         "success": True,
         "filename": filename,
         "processed_filename": processed_filename,
-        "detections": detected_vehicles
+        "detections": detected_vehicles,
+        "statistics": {
+            "total": total_vehicles,
+            "car": vehicle_counts.get("car", 0),
+            "truck": vehicle_counts.get("truck", 0),
+            "bus": vehicle_counts.get("bus", 0),
+            "motorcycle": vehicle_counts.get("motorcycle", 0),
+            "average_confidence": round(average_confidence, 2)
+        }
     })
 
 # Show uploaded image

@@ -7,6 +7,9 @@ const imagePreview = document.getElementById('imagePreview');
 const uploadStatus = document.getElementById('uploadStatus');
 
 const toastWrapper = document.getElementById('toastWrapper');
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
+const SUPPORTED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.bmp', '.webp'];
+let isUploading = false;
 
 const updateStatus = (text) => {
     if (uploadStatus) {
@@ -51,36 +54,43 @@ const showPreview = (file) => {
     reader.readAsDataURL(file);
 };
 
-const simulateUpload = () => {
+const setProgress = (percentage, label) => {
     progressWrapper.hidden = false;
     progressWrapper.classList.add('visible');
-    progressFill.style.width = '0%';
-    updateStatus('Uploading image...');
-    showToast('Upload started — AI is analyzing your vehicle.', 'info');
+    progressFill.style.width = `${percentage}%`;
+    const progressLabel = progressWrapper.querySelector('.progress-label');
+    if (progressLabel) progressLabel.textContent = label;
+};
 
-    let progress = 0;
-    const timer = setInterval(() => {
-        progress += Math.floor(Math.random() * 12) + 6;
-        if (progress >= 100) {
-            progress = 100;
-            clearInterval(timer);
-            updateStatus('Image ready for analysis');
-            showToast('Image upload complete. Ready for detection.', 'success');
-        }
-        progressFill.style.width = `${progress}%`;
-    }, 180);
+const setUploadBusy = (busy) => {
+    isUploading = busy;
+    if (browseBtn) browseBtn.disabled = busy;
+    if (fileInput) fileInput.disabled = busy;
+    if (detectBtn) {
+        detectBtn.disabled = busy;
+        detectBtn.setAttribute('aria-busy', String(busy));
+    }
 };
 
 const handleFiles = (files) => {
     if (!files || !files.length) return;
+    if (isUploading) return;
     const file = files[0];
-    if (!file.type.startsWith('image/')) {
-        showToast('Please select a valid image file to continue.', 'error');
+    const extension = `.${file.name.split('.').pop().toLowerCase()}`;
+    if (!SUPPORTED_EXTENSIONS.includes(extension) || (file.type && !file.type.startsWith('image/'))) {
+        showToast('Please select a JPG, PNG, BMP, or WEBP image.', 'error');
+        fileInput.value = '';
+        return;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+        showToast('Image is too large. Please choose an image under 10 MB.', 'error');
+        fileInput.value = '';
         return;
     }
     showToast('Image selected successfully.', 'success');
     showPreview(file);
-    simulateUpload();
+    setProgress(20, 'Image ready for analysis');
+    updateStatus('Image ready for analysis');
 };
 
 browseBtn.addEventListener('click', () => fileInput.click());
@@ -135,6 +145,23 @@ const formatValue = (value) => {
     return Number.isInteger(value) ? value : value.toFixed(1);
 };
 const uploadForm = document.getElementById("uploadForm");
+
+const updateDetectionStatistics = (statistics = {}) => {
+    const statisticValues = {
+        total: Number(statistics.total) || 0,
+        car: Number(statistics.car) || 0,
+        truck: Number(statistics.truck) || 0,
+        bus: Number(statistics.bus) || 0,
+        motorcycle: Number(statistics.motorcycle) || 0,
+        average_confidence: Number(statistics.average_confidence) || 0
+    };
+
+    Object.entries(statisticValues).forEach(([name, value]) => {
+        const element = document.querySelector(`[data-stat="${name}"]`);
+        if (!element) return;
+        element.textContent = name === 'average_confidence' ? `${value.toFixed(2)}%` : value;
+    });
+};
 
 const renderDetectionResults = (data) => {
     const detailsGrid = document.querySelector('.details-grid');
@@ -221,7 +248,9 @@ detectBtn?.addEventListener("click", async (e) => {
         return;
     }
 
-    showToast("Uploading image...");
+    setUploadBusy(true);
+    setProgress(45, 'Uploading image...');
+    showToast("Uploading image...", 'info');
     updateStatus("Processing image with AI...");
 
     const formData = new FormData();
@@ -255,6 +284,10 @@ detectBtn?.addEventListener("click", async (e) => {
             throw new Error('The server returned incomplete detection results.');
         }
 
+        if (!data.statistics) {
+            throw new Error('The server returned incomplete detection statistics.');
+        }
+
         const uploadedImage = document.getElementById("uploadedImage");
         const processedImage = document.getElementById("processedImage");
         if (!uploadedImage || !processedImage) {
@@ -265,11 +298,16 @@ detectBtn?.addEventListener("click", async (e) => {
         processedImage.onerror = handleResultImageError;
         uploadedImage.src = "/uploads/" + encodeURIComponent(data.filename);
         processedImage.src = "/uploads/" + encodeURIComponent(data.processed_filename);
+        updateDetectionStatistics(data.statistics);
         renderDetectionResults(data);
+        setProgress(100, 'Detection complete');
 
     } catch (error) {
         console.error("Detection error:", error);
         renderDetectionError(error.message || 'An unexpected error occurred.');
+        setProgress(0, 'Upload failed');
+    } finally {
+        setUploadBusy(false);
     }
 
 });
