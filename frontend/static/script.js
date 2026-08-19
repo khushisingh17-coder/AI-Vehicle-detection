@@ -9,7 +9,9 @@ const uploadStatus = document.getElementById('uploadStatus');
 const toastWrapper = document.getElementById('toastWrapper');
 
 const updateStatus = (text) => {
-    uploadStatus.textContent = text;
+    if (uploadStatus) {
+        uploadStatus.textContent = text;
+    }
 };
 
 const showToast = (message, variant = 'info') => {
@@ -204,6 +206,10 @@ const renderDetectionError = (message) => {
     showToast(message, 'error');
 };
 
+const handleResultImageError = () => {
+    renderDetectionError('The uploaded image could not be loaded.');
+};
+
 detectBtn?.addEventListener("click", async (e) => {
 
     e.preventDefault();
@@ -227,11 +233,17 @@ detectBtn?.addEventListener("click", async (e) => {
             body: formData
         });
 
-        if (!response.ok) {
-            throw new Error(`Upload failed: ${response.statusText}`);
+        let data;
+        try {
+            data = await response.json();
+        } catch {
+            throw new Error('The server returned an invalid response.');
         }
 
-        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.message || `Upload failed: ${response.statusText}`);
+        }
+
         console.log("Detection results:", data);
 
         if (!data.success) {
@@ -239,8 +251,20 @@ detectBtn?.addEventListener("click", async (e) => {
             return;
         }
 
-        document.getElementById("uploadedImage").src = "/uploads/" + data.filename;
-        document.getElementById("processedImage").src = "/uploads/" + data.filename;
+        if (!data.filename || !Array.isArray(data.detections)) {
+            throw new Error('The server returned incomplete detection results.');
+        }
+
+        const uploadedImage = document.getElementById("uploadedImage");
+        const processedImage = document.getElementById("processedImage");
+        if (!uploadedImage || !processedImage) {
+            throw new Error('The result images are unavailable.');
+        }
+
+        uploadedImage.onerror = handleResultImageError;
+        processedImage.onerror = handleResultImageError;
+        uploadedImage.src = "/uploads/" + encodeURIComponent(data.filename);
+        processedImage.src = "/uploads/" + encodeURIComponent(data.filename);
         renderDetectionResults(data);
 
     } catch (error) {
