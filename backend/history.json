@@ -24,5 +24,31 @@
       "motorcycle": 0,
       "average_confidence": 35.75
     }
+  },
+  {
+    "filename": "Screenshot_2026-08-02_202217_49a1af48.png",
+    "processed_filename": "Screenshot_2026-08-02_202217_49a1af48_processed.jpg",
+    "timestamp": "2026-08-20T14:04:10.478144+00:00",
+    "statistics": {
+      "total": 1,
+      "car": 1,
+      "truck": 0,
+      "bus": 0,
+      "motorcycle": 0,
+      "average_confidence": 35.75
+    }
+  },
+  {
+    "filename": "Screenshot_2026-08-02_202217_66f73803.png",
+    "processed_filename": "Screenshot_2026-08-02_202217_66f73803_processed.jpg",
+    "timestamp": "2026-08-20T14:06:42.548161+00:00",
+    "statistics": {
+      "total": 1,
+      "car": 1,
+      "truck": 0,
+      "bus": 0,
+      "motorcycle": 0,
+      "average_confidence": 35.75
+    }
   }
 ]

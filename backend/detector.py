@@ -3,6 +3,7 @@ import cv2
 
 # Load YOLO model
 model = YOLO("yolov8n.pt")
+VEHICLE_CONFIDENCE_THRESHOLD = 0.30
 
 
 def detect_vehicles(image_path, processed_image_path=None):
@@ -12,7 +13,7 @@ def detect_vehicles(image_path, processed_image_path=None):
     if image is None:
         return []
 
-    results = model(image)
+    results = model(image, conf=VEHICLE_CONFIDENCE_THRESHOLD)
 
     detected_vehicles = []
 
@@ -32,7 +33,7 @@ def detect_vehicles(image_path, processed_image_path=None):
             class_id = int(box.cls[0])
             confidence = float(box.conf[0])
 
-            if class_id in vehicle_classes:
+            if class_id in vehicle_classes and confidence >= VEHICLE_CONFIDENCE_THRESHOLD:
 
                 vehicle_name = vehicle_classes[class_id]
                 confidence_percent = round(confidence * 100, 2)
