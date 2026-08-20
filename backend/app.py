@@ -2,6 +2,9 @@ from flask import Flask, request, render_template, jsonify, send_from_directory
 import os
 import cv2
 import uuid
+import json
+import tempfile
+from datetime import datetime, timezone
 from collections import Counter
 from werkzeug.utils import secure_filename
 from detector import detect_vehicles
@@ -22,6 +25,36 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024
 ALLOWED_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
+HISTORY_FILE = os.path.join(BASE_DIR, "history.json")
+MAX_HISTORY_RECORDS = 20
+
+
+def load_history():
+    try:
+        with open(HISTORY_FILE, "r", encoding="utf-8") as history_file:
+            records = json.load(history_file)
+        return [record for record in records if isinstance(record, dict)] if isinstance(records, list) else []
+    except (FileNotFoundError, json.JSONDecodeError, OSError):
+        return []
+
+
+def save_history_record(record):
+    records = (load_history() + [record])[-MAX_HISTORY_RECORDS:]
+    temporary_path = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            dir=BASE_DIR,
+            delete=False
+        ) as temporary_file:
+            json.dump(records, temporary_file, indent=2)
+            temporary_path = temporary_file.name
+        os.replace(temporary_path, HISTORY_FILE)
+    except OSError:
+        if temporary_path and os.path.exists(temporary_path):
+            os.remove(temporary_path)
+        raise
 
 
 # Home Page
@@ -108,21 +141,71 @@ def upload():
         sum(detection["confidence"] for detection in detected_vehicles) / total_vehicles
         if total_vehicles else 0
     )
+    statistics = {
+        "total": total_vehicles,
+        "car": vehicle_counts.get("car", 0),
+        "truck": vehicle_counts.get("truck", 0),
+        "bus": vehicle_counts.get("bus", 0),
+        "motorcycle": vehicle_counts.get("motorcycle", 0),
+        "average_confidence": round(average_confidence, 2)
+    }
+
+    try:
+        save_history_record({
+            "filename": filename,
+            "processed_filename": processed_filename,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "statistics": statistics
+        })
+    except OSError:
+        app.logger.exception("Unable to save detection history")
 
     return jsonify({
         "success": True,
         "filename": filename,
         "processed_filename": processed_filename,
         "detections": detected_vehicles,
-        "statistics": {
-            "total": total_vehicles,
-            "car": vehicle_counts.get("car", 0),
-            "truck": vehicle_counts.get("truck", 0),
-            "bus": vehicle_counts.get("bus", 0),
-            "motorcycle": vehicle_counts.get("motorcycle", 0),
-            "average_confidence": round(average_confidence, 2)
-        }
+        "statistics": statistics
     })
+
+
+@app.route("/history", methods=["GET"])
+def history():
+    records = []
+    for record in load_history():
+        filename = record.get("filename", "")
+        processed_filename = record.get("processed_filename", "")
+        timestamp = record.get("timestamp", "")
+        statistics = record.get("statistics", {})
+        statistic_names = ("total", "car", "truck", "bus", "motorcycle", "average_confidence")
+        if (
+            not isinstance(filename, str)
+            or not isinstance(processed_filename, str)
+            or not isinstance(timestamp, str)
+            or not isinstance(statistics, dict)
+            or any(
+                not isinstance(statistics.get(name), (int, float))
+                or statistics.get(name) < 0
+                for name in statistic_names
+            )
+            or not filename
+            or not processed_filename
+            or secure_filename(filename) != filename
+            or secure_filename(processed_filename) != processed_filename
+        ):
+            continue
+        try:
+            datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        record = dict(record)
+        record["files"] = {
+            "original": os.path.exists(os.path.join(app.config["UPLOAD_FOLDER"], filename)),
+            "processed": os.path.exists(os.path.join(app.config["UPLOAD_FOLDER"], processed_filename))
+        }
+        records.append(record)
+    records.sort(key=lambda record: record["timestamp"], reverse=True)
+    return jsonify({"success": True, "history": records})
 
 # Show uploaded image
 @app.route("/uploads/<path:filename>")

@@ -1,0 +1,28 @@
+[
+  {
+    "filename": "Screenshot_2026-08-02_202217_841ff28e.png",
+    "processed_filename": "Screenshot_2026-08-02_202217_841ff28e_processed.jpg",
+    "timestamp": "2026-08-20T13:50:47.792083+00:00",
+    "statistics": {
+      "total": 1,
+      "car": 1,
+      "truck": 0,
+      "bus": 0,
+      "motorcycle": 0,
+      "average_confidence": 35.75
+    }
+  },
+  {
+    "filename": "Screenshot_2026-08-02_202217_2cf071f9.png",
+    "processed_filename": "Screenshot_2026-08-02_202217_2cf071f9_processed.jpg",
+    "timestamp": "2026-08-20T13:50:50.715385+00:00",
+    "statistics": {
+      "total": 1,
+      "car": 1,
+      "truck": 0,
+      "bus": 0,
+      "motorcycle": 0,
+      "average_confidence": 35.75
+    }
+  }
+]

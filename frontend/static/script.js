@@ -145,6 +145,9 @@ const formatValue = (value) => {
     return Number.isInteger(value) ? value : value.toFixed(1);
 };
 const uploadForm = document.getElementById("uploadForm");
+const historySearch = document.getElementById('historySearch');
+const historyTypeFilter = document.getElementById('historyTypeFilter');
+let historyRecords = [];
 
 const updateDetectionStatistics = (statistics = {}) => {
     const statisticValues = {
@@ -162,6 +165,84 @@ const updateDetectionStatistics = (statistics = {}) => {
         element.textContent = name === 'average_confidence' ? `${value.toFixed(2)}%` : value;
     });
 };
+
+const formatHistoryTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    return Number.isNaN(date.getTime()) ? 'Unknown time' : date.toLocaleString();
+};
+
+const renderHistory = (records = []) => {
+    const historyBody = document.getElementById('historyBody');
+    if (!historyBody) return;
+    if (!records.length) {
+        historyBody.innerHTML = '<tr><td colspan="6">No detection history yet.</td></tr>';
+        return;
+    }
+
+    historyBody.innerHTML = records.map((record) => {
+        const statistics = record.statistics || {};
+        const types = [
+            ['Cars', statistics.car],
+            ['Trucks', statistics.truck],
+            ['Buses', statistics.bus],
+            ['Motorcycles', statistics.motorcycle]
+        ].filter(([, count]) => Number(count) > 0)
+            .map(([label, count]) => `${label}: ${count}`).join(', ') || 'None';
+        const originalLink = record.files?.original
+            ? `<a href="/uploads/${encodeURIComponent(record.filename)}" target="_blank" rel="noreferrer">Original</a>`
+            : 'Unavailable';
+        const processedLink = record.files?.processed
+            ? `<a href="/uploads/${encodeURIComponent(record.processed_filename)}" target="_blank" rel="noreferrer">Processed</a>`
+            : 'Unavailable';
+
+        return `
+            <tr>
+                <td>${formatHistoryTimestamp(record.timestamp)}</td>
+                <td>${record.filename}</td>
+                <td>${Number(statistics.total) || 0}</td>
+                <td>${types}</td>
+                <td>${(Number(statistics.average_confidence) || 0).toFixed(2)}%</td>
+                <td>${originalLink} / ${processedLink}</td>
+            </tr>
+        `;
+    }).join('');
+};
+
+const getHistoryTimestamp = (record) => {
+    const timestamp = Date.parse(record.timestamp);
+    return Number.isNaN(timestamp) ? 0 : timestamp;
+};
+
+const filterHistory = () => {
+    const searchTerm = historySearch?.value.trim().toLowerCase() || '';
+    const selectedType = historyTypeFilter?.value || 'all';
+    const records = historyRecords
+        .filter((record) => record.filename.toLowerCase().includes(searchTerm))
+        .filter((record) => {
+            if (selectedType === 'all') return true;
+            return Number(record.statistics?.[selectedType]) > 0;
+        })
+        .sort((first, second) => getHistoryTimestamp(second) - getHistoryTimestamp(first));
+    renderHistory(records);
+};
+
+const loadHistory = async () => {
+    const response = await fetch('/history');
+    let data;
+    try {
+        data = await response.json();
+    } catch {
+        throw new Error('History returned an invalid response.');
+    }
+    if (!response.ok || !data.success || !Array.isArray(data.history)) {
+        throw new Error(data.message || 'History could not be loaded.');
+    }
+    historyRecords = data.history;
+    filterHistory();
+};
+
+historySearch?.addEventListener('input', filterHistory);
+historyTypeFilter?.addEventListener('change', filterHistory);
 
 const renderDetectionResults = (data) => {
     const detailsGrid = document.querySelector('.details-grid');
@@ -300,6 +381,7 @@ detectBtn?.addEventListener("click", async (e) => {
         processedImage.src = "/uploads/" + encodeURIComponent(data.processed_filename);
         updateDetectionStatistics(data.statistics);
         renderDetectionResults(data);
+        await loadHistory();
         setProgress(100, 'Detection complete');
 
     } catch (error) {
@@ -311,6 +393,11 @@ detectBtn?.addEventListener("click", async (e) => {
     }
 
 });
+
+loadHistory().catch((error) => {
+    console.error('History error:', error);
+});
+
 cameraBtn?.addEventListener('click', () => {
     showToast('Live camera mode is currently simulated for demo use.', 'warning');
 });
@@ -337,9 +424,7 @@ const animateCount = (card) => {
 };
 
 const setRevealDelay = (element, index) => {
-    const custom = Number(element.dataset.revealDelay || 0);
-    const delay = custom || index * 120;
-    element.style.setProperty('--reveal-delay', `${delay}ms`);
+    element.style.setProperty('--reveal-delay', '50ms');
 };
 
 const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -352,7 +437,7 @@ const revealObserver = new IntersectionObserver((entries, observer) => {
         }
         observer.unobserve(element);
     });
-}, { threshold: 0.2, rootMargin: '0px 0px -12% 0px' });
+}, { threshold: 0, rootMargin: '0px' });
 
 revealElements.forEach((element, index) => {
     setRevealDelay(element, index);

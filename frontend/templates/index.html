@@ -217,22 +217,36 @@
                         <span class="hero-eyebrow">Detection history</span>
                         <h3>Recent AI events</h3>
                     </div>
-                    <button class="pill-button">View full log</button>
+                    <div class="history-controls">
+                        <label class="search-field" for="historySearch">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="search" id="historySearch" placeholder="Search filename" aria-label="Search detection history by filename">
+                        </label>
+                        <label class="sr-only" for="historyTypeFilter">Filter history by vehicle type</label>
+                        <select class="pill-button" id="historyTypeFilter" aria-label="Filter history by vehicle type">
+                            <option value="all">All vehicles</option>
+                            <option value="car">Cars</option>
+                            <option value="truck">Trucks</option>
+                            <option value="bus">Buses</option>
+                            <option value="motorcycle">Motorcycles</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="table-wrap">
                     <table class="history-table">
                         <thead>
                             <tr>
-                                <th>Time</th>
-                                <th>Plate</th>
-                                <th>Company</th>
-                                <th>State</th>
-                                <th>Status</th>
+                                <th>Date / Time</th>
+                                <th>Image</th>
+                                <th>Total Vehicles</th>
+                                <th>Vehicle Types</th>
+                                <th>Average Confidence</th>
+                                <th>Images</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="historyBody">
                             <tr>
-                                <td colspan="5">No detection history available yet.</td>
+                                <td colspan="6">No detection history yet.</td>
                             </tr>
                         </tbody>
                     </table>
