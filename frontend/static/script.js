@@ -241,6 +241,31 @@ const loadHistory = async () => {
     filterHistory();
 };
 
+const updateFeatureCards = (detections) => {
+    const cards = Object.fromEntries(
+        Array.from(document.querySelectorAll('.features .card'))
+            .map((card) => [card.dataset.feature, card])
+    );
+    const getText = (feature) => cards[feature]?.querySelector('p');
+    const vehicleTypes = detections.map((detection) => {
+        const type = detection.vehicle || 'Unknown';
+        const confidence = Number(detection.confidence);
+        return Number.isFinite(confidence)
+            ? `${type.charAt(0).toUpperCase() + type.slice(1)} — ${confidence.toFixed(2)}%`
+            : type;
+    });
+    const colors = detections.map((detection) => detection.color || 'Unknown');
+    const plates = detections.map((detection) => detection.plate || 'Not available');
+    const states = detections.map((detection) => detection.state || detection.registration_region || 'Unknown');
+
+    if (getText('vehicle')) getText('vehicle').textContent = vehicleTypes.join(', ') || 'Not detected';
+    if (getText('color')) getText('color').textContent = colors.join(', ') || 'Not detected';
+    if (getText('plate')) getText('plate').textContent = plates.join(', ') || 'Not available';
+    if (getText('state')) getText('state').textContent = states.join(', ') || 'Unknown';
+    if (getText('brand')) getText('brand').textContent = detections.map((detection) => detection.brand || 'Unknown').join(', ') || 'Unknown';
+    if (getText('model')) getText('model').textContent = detections.map((detection) => detection.model || 'Unknown').join(', ') || 'Unknown';
+};
+
 historySearch?.addEventListener('input', filterHistory);
 historyTypeFilter?.addEventListener('change', filterHistory);
 
@@ -251,6 +276,7 @@ const renderDetectionResults = (data) => {
     const detections = Array.isArray(data?.detections) ? data.detections : [];
 
     if (detections.length === 0) {
+        updateFeatureCards([]);
         detailsGrid.innerHTML = `
             <div class="info-card" style="grid-column: 1 / -1; text-align: center; padding: 32px 20px;">
                 <i class="fa-solid fa-circle-info" style="font-size: 42px; opacity: 0.7; margin-bottom: 12px; display: block;"></i>
@@ -283,6 +309,13 @@ const renderDetectionResults = (data) => {
             const confidence = Number(detection.confidence ?? 0);
             const displayConfidence = Number.isFinite(confidence) ? `${confidence.toFixed(2)}%` : '0.00%';
             const emoji = vehicleEmoji[vehicleType] || '🚙';
+            const color = detection.color || 'Unknown';
+            const plate = detection.plate || 'Not available';
+            const plateConfidence = Number(detection.plate_confidence ?? 0);
+            const displayPlateConfidence = Number.isFinite(plateConfidence) ? `${plateConfidence.toFixed(2)}%` : '0.00%';
+            const registrationRegion = detection.state || detection.registration_region || 'Unknown';
+            const brand = detection.brand || 'Unknown';
+            const model = detection.model || 'Unknown';
 
             return `
                 <div class="info-card" style="animation: fadeIn 0.4s ease-out ${index * 0.08}s backwards;">
@@ -290,14 +323,33 @@ const renderDetectionResults = (data) => {
                     <h4>${emoji} ${label}</h4>
                     <p style="font-size: 18px; font-weight: 600; color: #f59e0b;">${displayConfidence}</p>
                     <p style="font-size: 12px; opacity: 0.7; margin-top: 5px;">Confidence Score</p>
+                    <p>Color: <strong>${color}</strong></p>
+                    <p>Number Plate: <strong>${plate}</strong></p>
+                    <p>Plate Confidence: <strong>${displayPlateConfidence}</strong></p>
+                    <p>Company: <strong>${brand}</strong></p>
+                    <p>Model: <strong>${model}</strong></p>
+                    <p>State: <strong>${registrationRegion}</strong></p>
                 </div>
             `;
         }).join('')}
     `;
 
+    updateFeatureCards(detections);
     updateStatus("Detection complete");
     showToast(`Successfully detected ${detections.length} vehicle(s)!`, 'success');
 };
+
+const resultSection = document.querySelector('.result-section');
+document.querySelectorAll('.features .card').forEach((card) => {
+    const focusResults = () => resultSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    card.addEventListener('click', focusResults);
+    card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            focusResults();
+        }
+    });
+});
 
 const renderDetectionError = (message) => {
     const detailsGrid = document.querySelector('.details-grid');

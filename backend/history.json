@@ -50,5 +50,169 @@
       "motorcycle": 0,
       "average_confidence": 35.75
     }
+  },
+  {
+    "filename": "Screenshot_2026-08-02_202217_b26c26c8.png",
+    "processed_filename": "Screenshot_2026-08-02_202217_b26c26c8_processed.jpg",
+    "timestamp": "2026-08-21T14:18:43.449785+00:00",
+    "statistics": {
+      "total": 1,
+      "car": 1,
+      "truck": 0,
+      "bus": 0,
+      "motorcycle": 0,
+      "average_confidence": 35.75
+    }
+  },
+  {
+    "filename": "Screenshot_2026-08-02_202217_9e474eef.png",
+    "processed_filename": "Screenshot_2026-08-02_202217_9e474eef_processed.jpg",
+    "timestamp": "2026-08-21T14:18:55.550192+00:00",
+    "statistics": {
+      "total": 1,
+      "car": 1,
+      "truck": 0,
+      "bus": 0,
+      "motorcycle": 0,
+      "average_confidence": 35.75
+    }
+  },
+  {
+    "filename": "Screenshot_2026-08-02_202217_196d906f.png",
+    "processed_filename": "Screenshot_2026-08-02_202217_196d906f_processed.jpg",
+    "timestamp": "2026-08-21T14:24:23.316135+00:00",
+    "statistics": {
+      "total": 1,
+      "car": 1,
+      "truck": 0,
+      "bus": 0,
+      "motorcycle": 0,
+      "average_confidence": 35.75
+    },
+    "detections": [
+      {
+        "vehicle": "car",
+        "confidence": 35.75,
+        "bbox": [
+          2,
+          41,
+          549,
+          435
+        ],
+        "color": "Silver",
+        "plate": "Not available",
+        "plate_confidence": 0,
+        "state": "Unknown",
+        "registration_region": "Not available",
+        "brand": "Unknown",
+        "model": "Unknown",
+        "plate_bbox": null
+      }
+    ]
+  },
+  {
+    "filename": "real_vehicle_test_5f1bc92b.jpg",
+    "processed_filename": "real_vehicle_test_5f1bc92b_processed.jpg",
+    "timestamp": "2026-08-21T14:31:45.841440+00:00",
+    "statistics": {
+      "total": 5,
+      "car": 4,
+      "truck": 1,
+      "bus": 0,
+      "motorcycle": 0,
+      "average_confidence": 59.86
+    },
+    "detections": [
+      {
+        "vehicle": "car",
+        "confidence": 91.05,
+        "bbox": [
+          524,
+          240,
+          1148,
+          621
+        ],
+        "color": "Unknown",
+        "plate": "Not available",
+        "plate_confidence": 0,
+        "state": "Unknown",
+        "registration_region": "Not available",
+        "brand": "Unknown",
+        "model": "Unknown",
+        "plate_bbox": null
+      },
+      {
+        "vehicle": "truck",
+        "confidence": 66.72,
+        "bbox": [
+          81,
+          77,
+          361,
+          422
+        ],
+        "color": "Blue",
+        "plate": "Not available",
+        "plate_confidence": 0,
+        "state": "Unknown",
+        "registration_region": "Not available",
+        "brand": "Unknown",
+        "model": "Unknown",
+        "plate_bbox": null
+      },
+      {
+        "vehicle": "car",
+        "confidence": 65.61,
+        "bbox": [
+          436,
+          116,
+          689,
+          228
+        ],
+        "color": "Unknown",
+        "plate": "Not available",
+        "plate_confidence": 0,
+        "state": "Unknown",
+        "registration_region": "Not available",
+        "brand": "Unknown",
+        "model": "Unknown",
+        "plate_bbox": null
+      },
+      {
+        "vehicle": "car",
+        "confidence": 40.0,
+        "bbox": [
+          436,
+          271,
+          643,
+          407
+        ],
+        "color": "Unknown",
+        "plate": "Not available",
+        "plate_confidence": 0,
+        "state": "Unknown",
+        "registration_region": "Not available",
+        "brand": "Unknown",
+        "model": "Unknown",
+        "plate_bbox": null
+      },
+      {
+        "vehicle": "car",
+        "confidence": 35.93,
+        "bbox": [
+          682,
+          132,
+          951,
+          220
+        ],
+        "color": "Unknown",
+        "plate": "Not available",
+        "plate_confidence": 0,
+        "state": "Unknown",
+        "registration_region": "Not available",
+        "brand": "Unknown",
+        "model": "Unknown",
+        "plate_bbox": null
+      }
+    ]
   }
 ]

@@ -155,7 +155,8 @@ def upload():
             "filename": filename,
             "processed_filename": processed_filename,
             "timestamp": datetime.now(timezone.utc).isoformat(),
-            "statistics": statistics
+            "statistics": statistics,
+            "detections": detected_vehicles
         })
     except OSError:
         app.logger.exception("Unable to save detection history")
