@@ -208,6 +208,31 @@ def history():
     records.sort(key=lambda record: record["timestamp"], reverse=True)
     return jsonify({"success": True, "history": records})
 
+
+@app.route("/history", methods=["DELETE"])
+def clear_history():
+    temporary_path = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            dir=BASE_DIR,
+            delete=False
+        ) as temporary_file:
+            json.dump([], temporary_file)
+            temporary_path = temporary_file.name
+        os.replace(temporary_path, HISTORY_FILE)
+    except OSError:
+        if temporary_path and os.path.exists(temporary_path):
+            os.remove(temporary_path)
+        app.logger.exception("Unable to clear detection history")
+        return jsonify({
+            "success": False,
+            "message": "Detection history could not be cleared."
+        }), 500
+
+    return jsonify({"success": True, "history": []})
+
 # Show uploaded image
 @app.route("/uploads/<path:filename>")
 def uploaded_file(filename):

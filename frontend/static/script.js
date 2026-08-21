@@ -147,6 +147,7 @@ const formatValue = (value) => {
 const uploadForm = document.getElementById("uploadForm");
 const historySearch = document.getElementById('historySearch');
 const historyTypeFilter = document.getElementById('historyTypeFilter');
+const clearHistoryBtn = document.getElementById('clearHistoryBtn');
 let historyRecords = [];
 
 const updateDetectionStatistics = (statistics = {}) => {
@@ -268,6 +269,30 @@ const updateFeatureCards = (detections) => {
 
 historySearch?.addEventListener('input', filterHistory);
 historyTypeFilter?.addEventListener('change', filterHistory);
+
+clearHistoryBtn?.addEventListener('click', async () => {
+    if (!historyRecords.length) {
+        showToast('Detection history is already empty.', 'info');
+        return;
+    }
+    if (!window.confirm('Clear all detection history? Uploaded images will be kept.')) return;
+
+    clearHistoryBtn.disabled = true;
+    try {
+        const response = await fetch('/history', { method: 'DELETE' });
+        const data = await response.json();
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || 'Detection history could not be cleared.');
+        }
+        historyRecords = [];
+        filterHistory();
+        showToast('Detection history cleared. Uploaded images were kept.', 'success');
+    } catch (error) {
+        showToast(error.message || 'Detection history could not be cleared.', 'error');
+    } finally {
+        clearHistoryBtn.disabled = false;
+    }
+});
 
 const renderDetectionResults = (data) => {
     const detailsGrid = document.querySelector('.details-grid');

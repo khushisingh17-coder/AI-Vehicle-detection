@@ -1,119 +1,8 @@
 [
   {
-    "filename": "Screenshot_2026-08-02_202217_841ff28e.png",
-    "processed_filename": "Screenshot_2026-08-02_202217_841ff28e_processed.jpg",
-    "timestamp": "2026-08-20T13:50:47.792083+00:00",
-    "statistics": {
-      "total": 1,
-      "car": 1,
-      "truck": 0,
-      "bus": 0,
-      "motorcycle": 0,
-      "average_confidence": 35.75
-    }
-  },
-  {
-    "filename": "Screenshot_2026-08-02_202217_2cf071f9.png",
-    "processed_filename": "Screenshot_2026-08-02_202217_2cf071f9_processed.jpg",
-    "timestamp": "2026-08-20T13:50:50.715385+00:00",
-    "statistics": {
-      "total": 1,
-      "car": 1,
-      "truck": 0,
-      "bus": 0,
-      "motorcycle": 0,
-      "average_confidence": 35.75
-    }
-  },
-  {
-    "filename": "Screenshot_2026-08-02_202217_49a1af48.png",
-    "processed_filename": "Screenshot_2026-08-02_202217_49a1af48_processed.jpg",
-    "timestamp": "2026-08-20T14:04:10.478144+00:00",
-    "statistics": {
-      "total": 1,
-      "car": 1,
-      "truck": 0,
-      "bus": 0,
-      "motorcycle": 0,
-      "average_confidence": 35.75
-    }
-  },
-  {
-    "filename": "Screenshot_2026-08-02_202217_66f73803.png",
-    "processed_filename": "Screenshot_2026-08-02_202217_66f73803_processed.jpg",
-    "timestamp": "2026-08-20T14:06:42.548161+00:00",
-    "statistics": {
-      "total": 1,
-      "car": 1,
-      "truck": 0,
-      "bus": 0,
-      "motorcycle": 0,
-      "average_confidence": 35.75
-    }
-  },
-  {
-    "filename": "Screenshot_2026-08-02_202217_b26c26c8.png",
-    "processed_filename": "Screenshot_2026-08-02_202217_b26c26c8_processed.jpg",
-    "timestamp": "2026-08-21T14:18:43.449785+00:00",
-    "statistics": {
-      "total": 1,
-      "car": 1,
-      "truck": 0,
-      "bus": 0,
-      "motorcycle": 0,
-      "average_confidence": 35.75
-    }
-  },
-  {
-    "filename": "Screenshot_2026-08-02_202217_9e474eef.png",
-    "processed_filename": "Screenshot_2026-08-02_202217_9e474eef_processed.jpg",
-    "timestamp": "2026-08-21T14:18:55.550192+00:00",
-    "statistics": {
-      "total": 1,
-      "car": 1,
-      "truck": 0,
-      "bus": 0,
-      "motorcycle": 0,
-      "average_confidence": 35.75
-    }
-  },
-  {
-    "filename": "Screenshot_2026-08-02_202217_196d906f.png",
-    "processed_filename": "Screenshot_2026-08-02_202217_196d906f_processed.jpg",
-    "timestamp": "2026-08-21T14:24:23.316135+00:00",
-    "statistics": {
-      "total": 1,
-      "car": 1,
-      "truck": 0,
-      "bus": 0,
-      "motorcycle": 0,
-      "average_confidence": 35.75
-    },
-    "detections": [
-      {
-        "vehicle": "car",
-        "confidence": 35.75,
-        "bbox": [
-          2,
-          41,
-          549,
-          435
-        ],
-        "color": "Silver",
-        "plate": "Not available",
-        "plate_confidence": 0,
-        "state": "Unknown",
-        "registration_region": "Not available",
-        "brand": "Unknown",
-        "model": "Unknown",
-        "plate_bbox": null
-      }
-    ]
-  },
-  {
-    "filename": "real_vehicle_test_5f1bc92b.jpg",
-    "processed_filename": "real_vehicle_test_5f1bc92b_processed.jpg",
-    "timestamp": "2026-08-21T14:31:45.841440+00:00",
+    "filename": "real_vehicle_test_18caad02.jpg",
+    "processed_filename": "real_vehicle_test_18caad02_processed.jpg",
+    "timestamp": "2026-08-21T14:44:42.642836+00:00",
     "statistics": {
       "total": 5,
       "car": 4,
@@ -205,6 +94,39 @@
           220
         ],
         "color": "Unknown",
+        "plate": "Not available",
+        "plate_confidence": 0,
+        "state": "Unknown",
+        "registration_region": "Not available",
+        "brand": "Unknown",
+        "model": "Unknown",
+        "plate_bbox": null
+      }
+    ]
+  },
+  {
+    "filename": "Screenshot_2026-08-02_202217_d8bc12a2.png",
+    "processed_filename": "Screenshot_2026-08-02_202217_d8bc12a2_processed.jpg",
+    "timestamp": "2026-08-21T14:45:23.940676+00:00",
+    "statistics": {
+      "total": 1,
+      "car": 1,
+      "truck": 0,
+      "bus": 0,
+      "motorcycle": 0,
+      "average_confidence": 35.75
+    },
+    "detections": [
+      {
+        "vehicle": "car",
+        "confidence": 35.75,
+        "bbox": [
+          2,
+          41,
+          549,
+          435
+        ],
+        "color": "Silver",
         "plate": "Not available",
         "plate_confidence": 0,
         "state": "Unknown",
